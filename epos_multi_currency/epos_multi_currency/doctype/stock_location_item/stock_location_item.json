@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2023-09-05 12:07:20.274740",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "stock_location",
+  "item",
+  "quantity",
+  "stock_uom",
+  "is_inventory",
+  "stock_location_enable",
+  "item_enable"
+ ],
+ "fields": [
+  {
+   "fieldname": "stock_location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Stock Location",
+   "options": "Stock Location"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_inventory",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Is Inventory"
+  },
+  {
+   "default": "0",
+   "fieldname": "stock_location_enable",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Stock Location Enable"
+  },
+  {
+   "default": "0",
+   "fieldname": "item_enable",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Item Enable"
+  },
+  {
+   "fieldname": "stock_uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Stock UOM",
+   "options": "UOM"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-09-05 16:04:13.437000",
+ "modified_by": "Administrator",
+ "module": "ePos Multi Currency",
+ "name": "Stock Location Item",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

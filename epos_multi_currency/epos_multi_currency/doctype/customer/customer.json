@@ -1,0 +1,130 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:customer_code",
+ "creation": "2023-09-05 13:06:10.002521",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customer_infomation_section",
+  "customer_code",
+  "customer_name",
+  "customer_group",
+  "column_break_ixcd",
+  "phone__1",
+  "phone__2",
+  "address",
+  "section_break_afqq",
+  "description_column",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer Group",
+   "options": "Customer Group",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone__1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Phone  1",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone__2",
+   "fieldtype": "Data",
+   "label": "Phone  2"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "column_break_ixcd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_infomation_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Infomation"
+  },
+  {
+   "fieldname": "section_break_afqq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description_column",
+   "fieldtype": "Column Break",
+   "label": "Description"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Description"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-09-05 15:00:46.340007",
+ "modified_by": "Administrator",
+ "module": "ePos Multi Currency",
+ "name": "Customer",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "customer_name",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

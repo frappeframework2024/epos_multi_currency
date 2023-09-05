@@ -1,0 +1,109 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:document_number",
+ "creation": "2023-09-05 14:49:39.852450",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "document_number",
+  "customer",
+  "branch",
+  "column_break_nkmx",
+  "sale_date",
+  "sale_time",
+  "include_payment",
+  "is_return",
+  "items_section",
+  "search_items",
+  "items"
+ ],
+ "fields": [
+  {
+   "fieldname": "document_number",
+   "fieldtype": "Data",
+   "label": "Document Number",
+   "unique": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "column_break_nkmx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sale_date",
+   "fieldtype": "Date",
+   "label": "Sale Date"
+  },
+  {
+   "fieldname": "sale_time",
+   "fieldtype": "Time",
+   "label": "Sale Time"
+  },
+  {
+   "default": "0",
+   "fieldname": "include_payment",
+   "fieldtype": "Check",
+   "label": "Include Payment"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_return",
+   "fieldtype": "Check",
+   "label": "Is Return"
+  },
+  {
+   "fieldname": "items_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Sales Invoice Item"
+  },
+  {
+   "fieldname": "search_items",
+   "fieldtype": "Data",
+   "label": "Search Items"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-09-05 16:38:19.843676",
+ "modified_by": "Administrator",
+ "module": "ePos Multi Currency",
+ "name": "Sales Invoice",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
