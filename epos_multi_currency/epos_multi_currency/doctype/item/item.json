@@ -25,6 +25,7 @@
   "opening_stock_location",
   "uom",
   "supplier",
+  "uom_list",
   "decription_section",
   "description",
   "tab_2_tab",
@@ -170,11 +171,17 @@
    "fieldtype": "Table",
    "label": "Stock Location Item",
    "options": "Stock Location Item"
+  },
+  {
+   "fieldname": "uom_list",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "UOM List"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-05 15:46:38.141221",
+ "modified": "2023-09-07 16:41:27.189144",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Item",

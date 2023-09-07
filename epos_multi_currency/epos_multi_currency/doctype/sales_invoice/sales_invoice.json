@@ -1,24 +1,29 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:document_number",
+ "autoname": "naming_series:",
  "creation": "2023-09-05 14:49:39.852450",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "document_number",
   "customer",
+  "stock_location",
   "branch",
-  "column_break_nkmx",
-  "sale_date",
-  "sale_time",
   "include_payment",
   "is_return",
+  "column_break_nkmx",
+  "document_naming_code",
+  "sale_date",
+  "sale_time",
   "items_section",
   "search_items",
-  "items"
+  "items",
+  "section_break_ouvy",
+  "sales_invoice_payment"
  ],
  "fields": [
   {
@@ -79,15 +84,42 @@
    "fieldname": "search_items",
    "fieldtype": "Data",
    "label": "Search Items"
+  },
+  {
+   "fieldname": "section_break_ouvy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "sales_invoice_payment",
+   "fieldtype": "Table",
+   "label": "Sales Invoice Payment",
+   "options": "Sales Invoice Payment"
+  },
+  {
+   "fieldname": "document_naming_code",
+   "fieldtype": "Data",
+   "label": "Document Naming Code"
+  },
+  {
+   "fieldname": "stock_location",
+   "fieldtype": "Link",
+   "label": "Stock Location",
+   "options": "Stock Location"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "SA-.YYYY.####"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-05 16:38:19.843676",
+ "modified": "2023-09-07 16:19:10.802480",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice",
- "naming_rule": "By fieldname",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {

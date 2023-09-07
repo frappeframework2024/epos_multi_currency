@@ -9,6 +9,7 @@
  "engine": "InnoDB",
  "field_order": [
   "stock_location_name",
+  "is_default",
   "enable"
  ],
  "fields": [
@@ -23,11 +24,17 @@
    "fieldname": "enable",
    "fieldtype": "Check",
    "label": "Enable"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "label": "Is Default"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-05 11:48:04.574505",
+ "modified": "2023-09-07 14:47:49.078315",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Stock Location",

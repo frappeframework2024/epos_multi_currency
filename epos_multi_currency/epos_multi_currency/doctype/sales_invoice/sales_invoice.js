@@ -13,6 +13,20 @@ frappe.ui.form.on("Sales Invoice", {
 			};
 		});
 	},
+	onload: function(frm) {
+		frappe.call({
+			method: "epos_multi_currency.epos_multi_currency.doctype.sales_invoice.sales_invoice.get_default_stock_location",
+			args: {},
+			callback: function(r){
+				if(r.message != undefined){
+					frm.set_value("stock_location", r.message.stock_location_name);
+				}
+			}
+		}),
+		current =new Date();
+		frm.set_value("sale_date", current);
+		frm.set_value("sale_time", current.getHours()+":"+current.getHours()+":"+current.getHours());
+	},
 	search_items(frm){
 		if(frm.doc.search_items!=undefined){
 				let barcode = frm.doc.search_items;
@@ -132,7 +146,7 @@ frappe.ui.form.on('Sales Invoice Item', {
 		else{
 			doc.price = doc.base_price;
 		}
-		doc.sub_total = doc.quantity * doc.uom_conversion_factor*doc.price;
+		doc.sub_total = doc.quantity*doc.price;
 		doc.discount = 0;
 		doc.discount_amount = 0;
 		doc.grand_total = doc.sub_total - (doc.discount_amount || 0);
@@ -148,18 +162,58 @@ frappe.ui.form.on('Sales Invoice Item', {
 				uom:doc.uom
 			},
 			callback: function(r){
-				if(r.message != undefined){
-					doc.cost = r.message.cost;
-					doc.whole_sale = r.message.whole_sale;
-					doc.base_price = r.message.price;
-					doc.price = r.message.price;
-					update_item(doc,frm);
+				if(r.message != undefined)
+				{
+					if (r.message.status == "ok"){
+						doc.cost = r.message.cost;
+						doc.whole_sale = r.message.whole_sale;
+						doc.base_price = r.message.price;
+						doc.price = r.message.price;
+						doc.stock_location = frm.doc.stock_location
+						update_item(doc,frm);
+					}
+					
 				}
 			}
 		})
         frm.refresh_field('items');
     },
-  })
+  });
+frappe.ui.form.on('Sales Invoice Payment', {
+	currency(frm,cdt, cdn) {
+        let doc=   locals[cdt][cdn];
+		frappe.call({
+			method: "epos_multi_currency.epos_multi_currency.doctype.sales_invoice.sales_invoice.get_currency_total_amount",
+			args: {
+				pcurrency: doc.currency,
+				items:frm.doc.items
+			},
+			callback: function(r){
+				if(r.message != undefined){
+					doc.total_amount = r.message.total_amount;
+					doc.balance = doc.discount_amount + doc.write_off_amount + doc.paid_amount - doc.total_amount
+					frm.refresh_field('sales_invoice_payment');
+				}
+			}
+		})
+    },
+	discount_amount(frm,cdt, cdn) {
+        let doc=   locals[cdt][cdn];
+		doc.balance = doc.total_amount - doc.discount_amount - doc.write_off_amount - doc.paid_amount
+		frm.refresh_field('sales_invoice_payment');
+	},
+	write_off_amount(frm,cdt, cdn) {
+        let doc=   locals[cdt][cdn];
+		doc.balance = doc.total_amount - doc.discount_amount - doc.write_off_amount - doc.paid_amount
+		frm.refresh_field('sales_invoice_payment');
+	},
+	paid_amount(frm,cdt, cdn) {
+        let doc=   locals[cdt][cdn];
+		doc.balance = doc.total_amount - doc.discount_amount - doc.write_off_amount - doc.paid_amount
+		frm.refresh_field('sales_invoice_payment');
+	}
+});
+
 function check_row_exist(frm, barcode,uom)
 {
   var row = frm.fields_dict["items"].grid.grid_rows.filter(function(d)
@@ -198,9 +252,12 @@ function add_product_to_sale_product(frm,p){
 		doc.base_price = p.price;
 		doc.quantity = 1;
 		doc.uom = p.uom;
+		doc.stock_uom = p.uom;
+		doc.uom_list = p.uom_list
 		doc.allow_free = p.allow_free ;
 		doc.allow_discount = p.allow_discount;
 		doc.currency = p.currency;
+		doc.stock_location = frm.doc.stock_location
 		update_item(doc,frm);
 	}
 }

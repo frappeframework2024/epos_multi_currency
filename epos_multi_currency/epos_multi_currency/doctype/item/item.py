@@ -56,3 +56,13 @@ class Item(Document):
 			self.uom_list = str_json
 		else:
 			self.uom_list = ""
+	
+	def on_update(self):
+		for a in self.item_uom:
+			c = frappe.get_doc("Item UOM",a.name)
+			if c.uom == self.uom:
+				c.cost = self.cost
+				c.whole_sale = self.whole_sale
+				c.price = self.price
+				c.save()
+		self.reload()
