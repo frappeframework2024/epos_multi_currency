@@ -1,0 +1,152 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2023-09-07 13:45:10.853465",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "stock_location",
+  "branch",
+  "column_break_qqkl",
+  "reference",
+  "document_number_code",
+  "stock_in_date",
+  "amended_from",
+  "supplier_section",
+  "supplier",
+  "supplier_name",
+  "column_break_kvbg",
+  "supplier_phone",
+  "section_break_ebsl",
+  "search_items",
+  "items"
+ ],
+ "fields": [
+  {
+   "default": "STI-.YYYY.-.####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "STI-.YYYY.-.####"
+  },
+  {
+   "fieldname": "column_break_qqkl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "document_number_code",
+   "fieldtype": "Data",
+   "label": "Document Number Code"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Stock In",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "stock_location",
+   "fieldtype": "Link",
+   "label": "Stock Location",
+   "options": "Stock Location"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "stock_in_date",
+   "fieldtype": "Date",
+   "label": "Stock In Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "supplier_section",
+   "fieldtype": "Section Break",
+   "label": "Supplier"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "supplier.supplier_name",
+   "fetch_if_empty": 1,
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Supplier Names"
+  },
+  {
+   "fieldname": "column_break_kvbg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "supplier.mobile_phone",
+   "fetch_if_empty": 1,
+   "fieldname": "supplier_phone",
+   "fieldtype": "Data",
+   "label": "Supplier Phone"
+  },
+  {
+   "fieldname": "section_break_ebsl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Stock In Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "label": "Reference"
+  },
+  {
+   "fieldname": "search_items",
+   "fieldtype": "Data",
+   "label": "Search Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-09-07 17:44:17.721864",
+ "modified_by": "Administrator",
+ "module": "ePos Multi Currency",
+ "name": "Stock In",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
