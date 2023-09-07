@@ -46,3 +46,13 @@ class Item(Document):
 					  "parentfield":"item_uom",
 					  "parenttype":"item"})
 		c.insert(ignore_permissions = True)
+	def before_save(self):
+		if len(self.item_uom)>0:
+			uom_list = self.item_uom
+			str_json = ""
+			for x in uom_list:
+				str_json += str(x.uom) + ","
+			str_json = str_json[0:len(str_json)-1]
+			self.uom_list = str_json
+		else:
+			self.uom_list = ""
