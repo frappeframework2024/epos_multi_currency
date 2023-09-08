@@ -22,6 +22,8 @@
   "column_break_7",
   "business_branch",
   "stock_location",
+  "is_inventory",
+  "is_stock_location_enalbe",
   "section_break_13",
   "beginning_stock_value",
   "quantity_on_hand",
@@ -106,14 +108,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "stock_location.business_branch",
-   "fieldname": "business_branch",
-   "fieldtype": "Data",
-   "in_standard_filter": 1,
-   "label": "Business Branch",
-   "set_only_once": 1
-  },
-  {
    "fieldname": "stock_location",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -129,7 +123,7 @@
   {
    "default": "0",
    "fieldname": "beginning_stock_value",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "label": "Beginning Stock Value",
    "set_only_once": 1
   },
@@ -163,7 +157,7 @@
   },
   {
    "fieldname": "price",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "label": "Cost",
    "set_only_once": 1
   },
@@ -182,7 +176,7 @@
   {
    "default": "0",
    "fieldname": "ending_stock_value",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "label": "Ending Stock Value",
    "set_only_once": 1
   },
@@ -217,12 +211,34 @@
    "in_list_view": 1,
    "label": "Item Name",
    "set_only_once": 1
+  },
+  {
+   "fetch_from": "stock_location.branch",
+   "fieldname": "business_branch",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Business Branch",
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_inventory",
+   "fieldtype": "Check",
+   "label": "Is Inventory",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_stock_location_enalbe",
+   "fieldtype": "Check",
+   "label": "Is Stock Location Enalbe",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-07 15:30:46.767479",
+ "modified": "2023-09-08 15:30:18.599972",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Inventory Transaction",

@@ -10,6 +10,7 @@
  "field_order": [
   "stock_location",
   "item",
+  "cost",
   "quantity",
   "stock_uom",
   "is_inventory",
@@ -65,12 +66,18 @@
    "in_list_view": 1,
    "label": "Stock UOM",
    "options": "UOM"
+  },
+  {
+   "default": "0",
+   "fieldname": "cost",
+   "fieldtype": "Float",
+   "label": "Cost"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-05 16:04:13.437000",
+ "modified": "2023-09-08 11:33:49.187078",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Stock Location Item",

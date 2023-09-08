@@ -6,14 +6,14 @@ from frappe.model.document import Document
 
 class InventoryTransaction(Document):
 	def validate(self):
-		data = frappe.db.sql("select name, quantity, cost from `tabStock Location Product` where product_code ='{}' and stock_location = '{}' limit 1".format(self.item_code, self.stock_location), as_dict=1)
+		data = frappe.db.sql("select name, quantity, cost from `tabStock Location Item` where parent ='{}' and stock_location = '{}' limit 1".format(self.item_code, self.stock_location), as_dict=1)
 		if data:
 			current_qty = data[0]["quantity"]
 
 			current_cost = data[0]["cost"]
 			if (current_cost or 0) == 0:
 				#get cost from product
-				p = frappe.get_doc("Product",self.item_code, "cost")
+				p = frappe.get_doc("Item",self.item_code, "cost")
 				current_cost = p.cost or 0
 			
 			self.price = self.price or current_cost
@@ -45,33 +45,36 @@ class InventoryTransaction(Document):
 	def after_insert(self):
 		
 		if self.product_has_in_stock_location==0:
-			add_stock_location_product(self)
+			add_stock_location_item(self)
 		else:
-			update_stock_location_product(self)
+			update_stock_location_item(self)
         
 
-def add_stock_location_product(self):
+def add_stock_location_item(self):
 	cost = 0
 	if self.transaction_type=="Stock Adjustment" and self.action =="Submit":
 		cost = self.price
 	else:
-		cost = self.ending_stock_value / self.balance
+		cost = self.ending_stock_value / (self.balance if self.balance > 0 else 1)
 		
-	 
 	doc = frappe.get_doc({
-			"doctype":"Stock Location Product",
-			"product_code" : self.item_code,
+			"doctype":"Stock Location Item",
+			"parent":self.item_code,
+			"parenttype":"Item",
+			"parentfield":'stock_location_item',
 			"stock_location" : self.stock_location, 
 			"cost" : cost,
 			"quantity" : self.balance,
+			"is_inventory":self.is_inventory,
+			"stock_location_enable":self.stock_location_enable,
 			"total_cost" :  cost * (self.balance or 0)
 		}
 	)
 
 	doc.insert()
 
-def update_stock_location_product(self):
-	doc = frappe.get_doc("Stock Location Product",self.stock_location_product_name )
+def update_stock_location_item(self):
+	doc = frappe.get_doc("Stock Location Item",self.stock_location_product_name )
 	balance = 1 if self.balance == 0 else self.balance
 
 	if self.transaction_type=="Stock Adjustment":

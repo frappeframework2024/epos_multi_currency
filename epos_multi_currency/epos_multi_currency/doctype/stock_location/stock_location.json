@@ -9,6 +9,7 @@
  "engine": "InnoDB",
  "field_order": [
   "stock_location_name",
+  "branch",
   "is_default",
   "enable"
  ],
@@ -16,7 +17,9 @@
   {
    "fieldname": "stock_location_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Stock Location Name",
+   "reqd": 1,
    "unique": 1
   },
   {
@@ -30,11 +33,19 @@
    "fieldname": "is_default",
    "fieldtype": "Check",
    "label": "Is Default"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-07 14:47:49.078315",
+ "modified": "2023-09-08 10:42:48.489921",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Stock Location",

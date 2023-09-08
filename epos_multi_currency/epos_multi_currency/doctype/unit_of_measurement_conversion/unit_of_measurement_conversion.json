@@ -16,7 +16,7 @@
  ],
  "fields": [
   {
-   "fetch_from": "from_uom.unit_category",
+   "fetch_from": ".unit_category",
    "fieldname": "unit_category",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -60,7 +60,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-07 15:22:07.261614",
+ "modified": "2023-09-08 11:52:00.979210",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Unit of Measurement Conversion",

@@ -1,11 +1,12 @@
 import frappe
+import json
 
 def add_to_inventory_transaction(data):
- 
-    doc = frappe.get_doc(data)
-    # frappe.throw(str(json.dumps(data)))
-    doc.insert()
-    
+	if data.get('in_quantity') or data.get('out_quantity'):
+	# if data.get('in_quantity') is not None :
+		doc = frappe.get_doc(data)
+		# frappe.throw(str(json.dumps(data)))
+		doc.insert()
 
 def update_item_quantity(stock_location,item_code, quantity,cost,doc):
     if doc:
@@ -115,7 +116,7 @@ def get_product_by_barcode(barcode):
 		p = frappe.get_doc("Item",{"item_code":barcode,"enable":1},["*"])
 		if p :
 			return {
-				"status":0,#success
+				"status":200,#success
 				"item_code": p.item_code,
 				"item_name":p.item_name_en,
 				"currency":p.currency,
@@ -139,3 +140,17 @@ def get_product_by_barcode(barcode):
 		
 	finally:
 		frappe.flags.mute_messages = False
+
+@frappe.whitelist()
+def get_currency_total_amount(pcurrency,items):
+	c = Counter()
+	list_item = json.loads(items)
+	for v in list_item:
+		c[v['currency']] += v['grand_total']
+	total_amount = 0
+	filtered_list = [grand_total for currency,grand_total in c.items() if currency == pcurrency]
+	if len(filtered_list) > 0:
+		total_amount = float(filtered_list[0])
+	else:
+		total_amount = 0
+	return {"total_amount" : total_amount}
