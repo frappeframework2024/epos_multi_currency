@@ -1,12 +1,21 @@
 # Copyright (c) 2023, ESTC and contributors
 # For license information, please see license.txt
-
+from epos_multi_currency.epos_multi_currency.utils import get_uom_conversion
 import frappe
 from frappe.model.document import Document
 import json
 from collections import Counter
 
 class SalesInvoice(Document):
+
+	def validate(self):
+		if len(self.items) == 0:
+			frappe.throw("Item Can't Be Empty")
+
+
+	def on_submit(self):
+		for a in self.items:
+			update_stock(a.item_code,a.quantity,a.stock_uom,a.uom,a.stock_location)
 
 	def before_save(self):
 		for a in self.items:
@@ -16,36 +25,72 @@ class SalesInvoice(Document):
 			else:
 				discount_rate = a.discount_amount or 0/a.quantity
 			a.price_after_discount = a.price - discount_rate
-	def after_insert(self):
-		c = Counter()
-		for v in self.items:
-			c[v.currency] += v.grand_total
-
-		for currency, grand_total in c.items():
-			c = frappe.get_doc({"doctype":"Sales Invoice Payment", 
-					  "currency":currency,
-					  "total_amount":grand_total,
-					  "parent":self.name,
-					  "parentfield":"sales_invoice_payment",
-					  "parenttype":"Sales Invoice"})
-			c.insert()
-		self.reload()
 
 	def on_update(self):
-		if len(self.sales_invoice_payment)>0:
-			c = Counter()
-			for v in self.items:
-				c[v.currency] += v.grand_total
+		
+		item_currencies = Counter()
+		for v in self.items:
+			item_currencies[v.currency] += v.grand_total
 
-			for currency, grand_total in c.items():
+		if len(self.sales_invoice_payment)>0:
+			already = []
+			duplicate = []
+			for a in self.sales_invoice_payment:
+				if a.currency not in already:
+					already.append(a.currency)
+				else:
+					duplicate.append(a.currency)
+			if(len(duplicate)>0):
+				error_msg="Currency Already Exist: "
+				for a in duplicate:
+					error_msg = error_msg + a + " "
+				frappe.throw(str(error_msg))
+
+			for currency, grand_total in item_currencies.items():
 				for a in self.sales_invoice_payment:
 					c = frappe.get_doc("Sales Invoice Payment",a.name)
 					if c.currency == currency:
 						c.total_amount = grand_total
-						c.balance = c.discount_amount + c.write_off_amount + c.paid_amount - c.total_amount
+						c.grand_total = c.total_amount - (c.discount_amount + c.write_off_amount)
+						c.balance = c.paid_amount - c.grand_total
 						c.save()
-			self.reload()
+			
+
 		
+		item_currency=[]
+		for currency,grand_total in item_currencies.items():
+			item_currency.append(currency)
+
+		if len(item_currency) >= len(self.sales_invoice_payment):
+			for a in self.sales_invoice_payment:
+				item_currency.remove(a.currency)
+			for currency, grand_total in item_currencies.items():
+				if currency in item_currency:
+					c = frappe.get_doc({"doctype":"Sales Invoice Payment", 
+							"currency":currency,
+							"total_amount":grand_total,
+							"grand_total":grand_total,
+							"balance" : grand_total *-1,
+							"parent":self.name,
+							"parentfield":"sales_invoice_payment",
+							"parenttype":"Sales Invoice"})
+					c.insert()
+		else:
+			
+			for a in self.sales_invoice_payment:
+				if a.currency not in item_currency:
+					c = frappe.delete_doc("Sales Invoice Payment",a.name)		
+		
+		for b in self.sales_invoice_payment:
+			for a in self.items:
+				if a.currency == b.currency:
+					frappe.db.set_value('Sales Invoice Item', a.name, {
+						'sales_invoice_discount_rate': a.price * b.discount_amount/b.total_amount,
+						'sales_invoice_write_off_rate': a.price * b.write_off_amount/b.total_amount
+					})
+		
+def update_stock(item_code,quantity,stock_uom,uom,stock_location):
+	frappe.msgprint(item_code+str(quantity)+stock_uom+uom+stock_location)
 
 	
 @frappe.whitelist()
@@ -55,7 +100,7 @@ def get_product(barcode):
 		p = frappe.get_doc("Item",{"item_code":barcode,"enable":1},["*"])
 		if p :
 			return {
-				"status":0,#success
+				"status":0,#
 				"item_code": p.item_code,
 				"item_name":p.item_name_en,
 				"currency":p.currency,
@@ -81,20 +126,28 @@ def get_product(barcode):
 		frappe.flags.mute_messages = False
 
 @frappe.whitelist()
-def get_item_uom_price(item_code,uom):
-	p = frappe.get_doc("Item UOM",{"parent":item_code,"uom":uom},["*"])
-	if p :
+def get_item_uom_price(item_code,uom,stock_uom):
+	uom_coversion = get_uom_conversion(uom,stock_uom)
+	if frappe.db.exists("Item UOM", {"parent":item_code,"uom":uom}):
+		p = frappe.get_doc("Item UOM",{"parent":item_code,"uom":uom},["*"])
+		if p :
+			return {
+				"cost": p.cost,
+				"whole_sale": p.whole_sale,
+				"price": p.price,
+				"uom_conversion":uom_coversion,
+				"predefine":1
+			}
+			
+	else:
+		p = frappe.get_doc("Item UOM",{"parent":item_code,"uom":stock_uom},["*"])
 		return {
-			"status":"ok",
 			"cost": p.cost,
 			"whole_sale": p.whole_sale,
 			"price": p.price,
+			"uom_conversion":uom_coversion,
+			"predefine":0
 		}
-	else:
-		return {
-			"status":"error"
-		}
-
 @frappe.whitelist()
 def get_available_stock(stock_location,item_code):
 	try:

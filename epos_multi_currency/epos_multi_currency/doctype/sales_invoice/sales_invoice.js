@@ -2,30 +2,25 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Sales Invoice", {
-	setup: function(frm) {
-		frm.set_query("uom", "items", function(doc, cdt, cdn) {
-			let item = locals[cdt][cdn];
-			const uoms = item.uom_list.split(",")
-			return {
-				filters: [
-					['UOM', 'unit_name', 'in', uoms]
-				]
-			};
-		});
-	},
+	
 	onload: function(frm) {
-		frappe.call({
-			method: "epos_multi_currency.epos_multi_currency.doctype.sales_invoice.sales_invoice.get_default_stock_location",
-			args: {},
-			callback: function(r){
-				if(r.message != undefined){
-					frm.set_value("stock_location", r.message.stock_location_name);
+		if(frm.is_new()){
+			frappe.call({
+				method: "epos_multi_currency.epos_multi_currency.doctype.sales_invoice.sales_invoice.get_default_stock_location",
+				args: {},
+				callback: function(r){
+					if(r.message != undefined){
+						frm.set_value("stock_location", r.message.stock_location_name);
+					}
 				}
-			}
-		}),
-		current =new Date();
-		frm.set_value("sale_date", current);
-		frm.set_value("sale_time", current.getHours()+":"+current.getHours()+":"+current.getHours());
+			}),
+			current =new Date();
+			frm.set_value("sale_date", current);
+			frm.set_value("sale_time", current.getHours()+":"+current.getMinutes()+":"+current.getSeconds());
+		}
+	},
+	after_save(frm){
+		frm.reload_doc()
 	},
 	search_items(frm){
 		if(frm.doc.search_items!=undefined){
@@ -67,6 +62,14 @@ frappe.ui.form.on("Sales Invoice", {
 		frm.doc.search_items = "";
 		frm.refresh_field('search_items');  
 	},
+	discount_percent(frm){
+		frm.doc.sales_invoice_payment.forEach(function(p){
+			p.discount_amount = p.total_amount * frm.doc.discount_percent/100
+			p.grand_total = p.total_amount -  (p.discount_amount + p.write_off_amount)
+			p.balance = p.paid_amount - p.grand_total
+		});
+		frm.refresh_field('sales_invoice_payment'); 
+	},
 });
 
 
@@ -77,17 +80,29 @@ frappe.ui.form.on('Sales Invoice Item', {
 			method: "epos_multi_currency.epos_multi_currency.doctype.sales_invoice.sales_invoice.get_item_uom_price",
 			args: {
 				item_code: doc.item_code,
-				uom:doc.uom
+				uom:doc.uom,
+				stock_uom:doc.stock_uom
 			},
 			callback: function(r){
 				if(r.message != undefined){
-					if(r.message.status == 200){
+					if(r.message.predefine == 1){
+						doc.uom_conversion = r.message.uom_conversion
 						doc.cost = r.message.cost;
 						doc.whole_sale = r.message.whole_sale;
 						doc.base_price = r.message.price;
 						doc.price = r.message.price;
-						update_item(doc,frm);
+						doc.stock_location = frm.doc.stock_location
 					}
+					else{
+						doc.uom_conversion = r.message.uom_conversion;
+						doc.cost = r.message.cost * doc.uom_conversion;
+						doc.whole_sale = r.message.whole_sale * doc.uom_conversion;
+						doc.base_price = r.message.price * doc.uom_conversion;
+						doc.price = r.message.price * doc.uom_conversion;
+						doc.stock_location = frm.doc.stock_location
+					}
+				
+					update_item(doc,frm);
 				}
 			}
 		})
@@ -159,20 +174,29 @@ frappe.ui.form.on('Sales Invoice Item', {
 			method: "epos_multi_currency.epos_multi_currency.doctype.sales_invoice.sales_invoice.get_item_uom_price",
 			args: {
 				item_code: doc.item_code,
-				uom:doc.uom
+				uom:doc.uom,
+				stock_uom:doc.stock_uom
 			},
 			callback: function(r){
 				if(r.message != undefined)
 				{
-					if (r.message.status == "ok"){
+					if(r.message.predefine == 1){
+						doc.uom_conversion = r.message.uom_conversion
 						doc.cost = r.message.cost;
 						doc.whole_sale = r.message.whole_sale;
 						doc.base_price = r.message.price;
 						doc.price = r.message.price;
 						doc.stock_location = frm.doc.stock_location
-						update_item(doc,frm);
 					}
-					
+					else{
+						doc.uom_conversion = r.message.uom_conversion;
+						doc.cost = r.message.cost * doc.uom_conversion;
+						doc.whole_sale = r.message.whole_sale * doc.uom_conversion;
+						doc.base_price = r.message.price * doc.uom_conversion;
+						doc.price = r.message.price * doc.uom_conversion;
+						doc.stock_location = frm.doc.stock_location
+					}
+					update_item(doc,frm);
 				}
 			}
 		})
@@ -191,7 +215,8 @@ frappe.ui.form.on('Sales Invoice Payment', {
 			callback: function(r){
 				if(r.message != undefined){
 					doc.total_amount = r.message.total_amount;
-					doc.balance = doc.discount_amount + doc.write_off_amount + doc.paid_amount - doc.total_amount
+					doc.grand_total = doc.total_amount - (doc.discount_amount - doc.write_off_amount)
+					doc.balance = doc.paid_amount - doc.grand_total
 					frm.refresh_field('sales_invoice_payment');
 				}
 			}
@@ -199,17 +224,20 @@ frappe.ui.form.on('Sales Invoice Payment', {
     },
 	discount_amount(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
-		doc.balance = doc.total_amount - doc.discount_amount - doc.write_off_amount - doc.paid_amount
+		doc.grand_total = doc.total_amount - (doc.discount_amount + doc.write_off_amount)
+		doc.balance = doc.paid_amount - doc.grand_total 
 		frm.refresh_field('sales_invoice_payment');
 	},
 	write_off_amount(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
-		doc.balance = doc.total_amount - doc.discount_amount - doc.write_off_amount - doc.paid_amount
+		doc.grand_total = doc.total_amount - (doc.discount_amount + doc.write_off_amount)
+		doc.balance = doc.paid_amount - doc.grand_total 
 		frm.refresh_field('sales_invoice_payment');
 	},
 	paid_amount(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
-		doc.balance = doc.total_amount - doc.discount_amount - doc.write_off_amount - doc.paid_amount
+		doc.grand_total = doc.total_amount - (doc.discount_amount + doc.write_off_amount)
+		doc.balance = doc.paid_amount - doc.grand_total 
 		frm.refresh_field('sales_invoice_payment');
 	}
 });

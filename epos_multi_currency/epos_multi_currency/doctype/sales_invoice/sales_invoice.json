@@ -12,7 +12,6 @@
   "customer",
   "stock_location",
   "branch",
-  "include_payment",
   "is_return",
   "column_break_nkmx",
   "document_number",
@@ -21,8 +20,11 @@
   "items_section",
   "search_items",
   "items",
+  "section_break_lhnr",
+  "discount_percent",
   "section_break_ouvy",
-  "sales_invoice_payment"
+  "sales_invoice_payment",
+  "amended_from"
  ],
  "fields": [
   {
@@ -34,8 +36,10 @@
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Customer",
-   "options": "Customer"
+   "options": "Customer",
+   "reqd": 1
   },
   {
    "fieldname": "branch",
@@ -50,18 +54,16 @@
   {
    "fieldname": "sale_date",
    "fieldtype": "Date",
-   "label": "Sale Date"
+   "in_list_view": 1,
+   "label": "Sale Date",
+   "reqd": 1
   },
   {
    "fieldname": "sale_time",
    "fieldtype": "Time",
-   "label": "Sale Time"
-  },
-  {
-   "default": "0",
-   "fieldname": "include_payment",
-   "fieldtype": "Check",
-   "label": "Include Payment"
+   "in_list_view": 1,
+   "label": "Sale Time",
+   "reqd": 1
   },
   {
    "default": "0",
@@ -97,19 +99,41 @@
   {
    "fieldname": "stock_location",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Stock Location",
-   "options": "Stock Location"
+   "options": "Stock Location",
+   "reqd": 1
   },
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
    "options": "SA-.YYYY.####"
+  },
+  {
+   "fieldname": "section_break_lhnr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "discount_percent",
+   "fieldtype": "Float",
+   "label": "Discount Percent"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Sales Invoice",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2023-09-07 17:47:11.891086",
+ "modified": "2023-09-08 15:45:58.969039",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice",

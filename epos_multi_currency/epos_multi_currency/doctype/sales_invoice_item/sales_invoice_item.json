@@ -33,10 +33,12 @@
   "section_break_wqco",
   "column_break_qnql",
   "grand_total",
-  "sub_total",
-  "sales_invoice_discount",
-  "uom_list",
+  "sales_invoice_discount_rate",
   "price_after_discount",
+  "column_break_ojqq",
+  "sub_total",
+  "uom_list",
+  "sales_invoice_write_off_rate",
   "section_break_yojn",
   "stock_location",
   "column_break_yjrh",
@@ -76,7 +78,7 @@
    "options": "UOM"
   },
   {
-   "fetch_from": "item.price",
+   "fetch_from": ".price",
    "fieldname": "price",
    "fieldtype": "Float",
    "label": "Price"
@@ -182,23 +184,11 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "sales_invoice_discount",
-   "fieldtype": "Float",
-   "hidden": 1,
-   "label": "Sales Invoice Discount"
-  },
-  {
    "fetch_from": "item.uom_list",
    "fieldname": "uom_list",
    "fieldtype": "Data",
    "hidden": 1,
    "label": "UOM List"
-  },
-  {
-   "fieldname": "price_after_discount",
-   "fieldtype": "Float",
-   "hidden": 1,
-   "label": "Price After Discount"
   },
   {
    "fieldname": "section_break_yojn",
@@ -223,12 +213,34 @@
    "bold": 1,
    "fieldname": "item_section",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "price_after_discount",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Price After Discount"
+  },
+  {
+   "fieldname": "sales_invoice_discount_rate",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Sales Invoice Discount Rate"
+  },
+  {
+   "fieldname": "column_break_ojqq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_invoice_write_off_rate",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Sales Invoice Write Off Rate"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-07 16:41:55.144515",
+ "modified": "2023-09-08 10:27:59.600738",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice Item",
