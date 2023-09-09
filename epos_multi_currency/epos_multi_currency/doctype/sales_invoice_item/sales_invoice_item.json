@@ -25,6 +25,7 @@
   "column_break_phrj",
   "price",
   "is_free_item",
+  "cost",
   "section_break_vlwj",
   "discount_type",
   "column_break_lijo",
@@ -35,6 +36,7 @@
   "grand_total",
   "sales_invoice_discount_rate",
   "price_after_discount",
+  "uom_conversion",
   "column_break_ojqq",
   "sub_total",
   "uom_list",
@@ -235,12 +237,24 @@
    "fieldtype": "Float",
    "hidden": 1,
    "label": "Sales Invoice Write Off Rate"
+  },
+  {
+   "fieldname": "cost",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Cost"
+  },
+  {
+   "fieldname": "uom_conversion",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "UOM Conversion"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-08 10:27:59.600738",
+ "modified": "2023-09-09 14:38:25.751739",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice Item",

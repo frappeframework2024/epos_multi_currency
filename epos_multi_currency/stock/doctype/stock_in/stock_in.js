@@ -27,9 +27,8 @@ frappe.ui.form.on("Stock In", {
 			current = new Date();
 			frm.set_value("stock_in_date", current);
 		}
-
-
 	},
+
 	after_save(frm){
 		frm.reload_doc()
 	},

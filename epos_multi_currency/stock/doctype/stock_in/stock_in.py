@@ -46,7 +46,7 @@ class StockIn(Document):
 					already.append(a.currency)
 				else:
 					duplicate.append(a.currency)
-			if(len(duplicate)>0  and not self.is_new()):
+			if(len(duplicate)>0):
 				error_msg="Currency Already Exist: "
 				for a in duplicate:
 					error_msg = error_msg + a + " " + str(self)
@@ -88,6 +88,14 @@ class StockIn(Document):
 					c = frappe.delete_doc("Stock In Payment",a.name)
 
 	def on_submit(self):
+		item_currencies = Counter()
+		for v in self.items:
+			item_currencies[v.currency] += v.grand_total
+		for currency, grand_total in item_currencies.items():
+			for a in self.stock_in_payments:
+				payment = frappe.db.get_value("Stock In Payment",a.name, ["currency", "paid_amount"], as_dict=1)
+				if payment.currency == currency and payment.paid_amount != grand_total:
+					frappe.throw(("Paid amount must equal grand total amount for {}".format(frappe.bold(currency))))
 		"""Update product inventory when submit"""
 		frappe.enqueue('epos_multi_currency.epos_multi_currency.doctype.stock_in.stock_in.update_inventory_on_submit',self=self)
 	def on_cancel(self):

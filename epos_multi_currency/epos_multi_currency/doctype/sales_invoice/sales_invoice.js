@@ -38,7 +38,7 @@ frappe.ui.form.on("Sales Invoice", {
 					let row_exist = check_row_exist(frm,barcode,r.message.uom);
 					if(row_exist!=undefined)
                 	{
-						row_exist.doc.quantity = row_exist.doc.quantity + 1;
+						row_exist.doc.quantity = row_exist.doc.quantity + 1 * frm.doc.is_return === 1 ? -1 : 1;
 						update_item(row_exist.doc,frm);
 						frm.refresh_field('items');
 					}
@@ -186,7 +186,8 @@ frappe.ui.form.on('Sales Invoice Item', {
 						doc.whole_sale = r.message.whole_sale;
 						doc.base_price = r.message.price;
 						doc.price = r.message.price;
-						doc.stock_location = frm.doc.stock_location
+						doc.stock_location = frm.doc.stock_location;
+						doc.quantity = frm.doc.is_return === 1 ? -1 : 1 
 					}
 					else{
 						doc.uom_conversion = r.message.uom_conversion;
@@ -194,7 +195,8 @@ frappe.ui.form.on('Sales Invoice Item', {
 						doc.whole_sale = r.message.whole_sale * doc.uom_conversion;
 						doc.base_price = r.message.price * doc.uom_conversion;
 						doc.price = r.message.price * doc.uom_conversion;
-						doc.stock_location = frm.doc.stock_location
+						doc.stock_location = frm.doc.stock_location;
+						doc.quantity = frm.doc.is_return === 1 ? -1 : 1 ;
 					}
 					update_item(doc,frm);
 				}
@@ -278,14 +280,16 @@ function add_product_to_sale_product(frm,p){
 		doc.item_name = p.item_name;
 		doc.price = p.price;
 		doc.base_price = p.price;
-		doc.quantity = 1;
+		doc.quantity = frm.doc.is_return === 1 ? -1 : 1;
 		doc.uom = p.uom;
 		doc.stock_uom = p.uom;
 		doc.uom_list = p.uom_list
 		doc.allow_free = p.allow_free ;
 		doc.allow_discount = p.allow_discount;
 		doc.currency = p.currency;
-		doc.stock_location = frm.doc.stock_location
+		doc.stock_location = frm.doc.stock_location;
+		doc.uom_conversion = 1
+		doc.cost = p.cost
 		update_item(doc,frm);
 	}
 }

@@ -36,24 +36,6 @@
    "options": "STI-.YYYY.-.####"
   },
   {
-   "fieldname": "column_break_qqkl",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "document_number_code",
-   "fieldtype": "Data",
-   "label": "Document Number Code"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Stock In",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
    "fieldname": "stock_location",
    "fieldtype": "Link",
    "label": "Stock Location",
@@ -66,10 +48,33 @@
    "options": "Branch"
   },
   {
+   "fieldname": "column_break_qqkl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "label": "Reference"
+  },
+  {
+   "fieldname": "document_number_code",
+   "fieldtype": "Data",
+   "label": "Document Number Code"
+  },
+  {
    "fieldname": "stock_in_date",
    "fieldtype": "Date",
    "label": "Stock In Date",
    "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Stock In",
+   "print_hide": 1,
+   "read_only": 1
   },
   {
    "fieldname": "supplier_section",
@@ -107,21 +112,16 @@
    "fieldtype": "Section Break"
   },
   {
+   "fieldname": "search_items",
+   "fieldtype": "Data",
+   "label": "Search Item"
+  },
+  {
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Items",
    "options": "Stock In Item",
    "reqd": 1
-  },
-  {
-   "fieldname": "reference",
-   "fieldtype": "Data",
-   "label": "Reference"
-  },
-  {
-   "fieldname": "search_items",
-   "fieldtype": "Data",
-   "label": "Search Item"
   },
   {
    "fieldname": "section_break_mpcs",
@@ -138,9 +138,9 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-09 13:55:31.359065",
+ "modified": "2023-09-09 15:12:24.021131",
  "modified_by": "Administrator",
- "module": "ePos Multi Currency",
+ "module": "Stock",
  "name": "Stock In",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",

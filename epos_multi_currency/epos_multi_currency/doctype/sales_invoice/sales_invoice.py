@@ -1,6 +1,6 @@
 # Copyright (c) 2023, ESTC and contributors
 # For license information, please see license.txt
-from epos_multi_currency.epos_multi_currency.utils import get_uom_conversion
+from epos_multi_currency.epos_multi_currency.utils import get_uom_conversion,add_to_inventory_transaction
 import frappe
 from frappe.model.document import Document
 import json
@@ -11,11 +11,21 @@ class SalesInvoice(Document):
 	def validate(self):
 		if len(self.items) == 0:
 			frappe.throw("Item Can't Be Empty")
+		error_msg=""
+		if self.is_return == 1:
+			for a in self.items:
+				if a.quantity > 0:
+					error_msg = error_msg + "Item {} Quantity Can't Be More Than 0<br/>".format(a.item_code)
+		if error_msg:
+			frappe.throw(str(error_msg))
 
+	def on_cancel(self):
+		for a in self.items:
+			update_stock(self,a,1)
 
 	def on_submit(self):
 		for a in self.items:
-			update_stock(a.item_code,a.quantity,a.stock_uom,a.uom,a.stock_location)
+			update_stock(self,a,self.is_return)
 
 	def before_save(self):
 		for a in self.items:
@@ -27,12 +37,8 @@ class SalesInvoice(Document):
 			a.price_after_discount = a.price - discount_rate
 
 	def on_update(self):
-		
-		item_currencies = Counter()
-		for v in self.items:
-			item_currencies[v.currency] += v.grand_total
 
-		if len(self.sales_invoice_payment)>0:
+		if len(self.sales_invoice_payment) > 0:
 			already = []
 			duplicate = []
 			for a in self.sales_invoice_payment:
@@ -46,41 +52,54 @@ class SalesInvoice(Document):
 					error_msg = error_msg + a + " "
 				frappe.throw(str(error_msg))
 
-			for currency, grand_total in item_currencies.items():
-				for a in self.sales_invoice_payment:
-					c = frappe.get_doc("Sales Invoice Payment",a.name)
-					if c.currency == currency:
-						c.total_amount = grand_total
-						c.grand_total = c.total_amount - (c.discount_amount + c.write_off_amount)
-						c.balance = c.paid_amount - c.grand_total
-						c.save()
-			
+		item_currencies = Counter()
+		for v in self.items:
+			item_currencies[v.currency] += v.grand_total
 
+		payment_currency=[]
+		for a in self.sales_invoice_payment:
+			payment_currency.append(a)
 		
-		item_currency=[]
-		for currency,grand_total in item_currencies.items():
-			item_currency.append(currency)
+		frappe.db.sql("delete from `tabSales Invoice Payment` where parent = '{}' ".format(self.name))
 
-		if len(item_currency) >= len(self.sales_invoice_payment):
-			for a in self.sales_invoice_payment:
-				item_currency.remove(a.currency)
-			for currency, grand_total in item_currencies.items():
-				if currency in item_currency:
+		for currency, grand_total in item_currencies.items():
+			list_payment_currency = list([a for a in payment_currency if a.currency == currency])
+			if len(list_payment_currency) > 0:
+				b = list_payment_currency[0]
+				if currency == b.currency:
 					c = frappe.get_doc({"doctype":"Sales Invoice Payment", 
 							"currency":currency,
 							"total_amount":grand_total,
+							"discount_amount":b.discount_amount or 0,
+							"write_off_amount":b.write_off_amount or 0,
 							"grand_total":grand_total,
-							"balance" : grand_total *-1,
+							"paid_amount":b.paid_amount or 0,
+							"balace":b.balance or 0,
 							"parent":self.name,
 							"parentfield":"sales_invoice_payment",
 							"parenttype":"Sales Invoice"})
 					c.insert()
-		else:
-			
-			for a in self.sales_invoice_payment:
-				if a.currency not in item_currency:
-					c = frappe.delete_doc("Sales Invoice Payment",a.name)
-		
+			else:
+				c = frappe.get_doc({"doctype":"Sales Invoice Payment", 
+						"currency":currency,
+						"total_amount":grand_total,
+						"discount_amount":0,
+						"write_off_amount": 0,
+						"grand_total":grand_total,
+						"paid_amount":0,
+						"balace":0,
+						"parent":self.name,
+						"parentfield":"sales_invoice_payment",
+						"parenttype":"Sales Invoice"})
+				c.insert()
+		self.reload()
+
+		for a in self.sales_invoice_payment:
+			c = frappe.get_doc("Sales Invoice Payment",a.name)
+			c.grand_total = c.total_amount - (c.discount_amount + c.write_off_amount)
+			c.balance = c.paid_amount - c.grand_total
+			c.save()
+
 		for b in self.sales_invoice_payment:
 			for a in self.items:
 				if a.currency == b.currency:
@@ -89,8 +108,36 @@ class SalesInvoice(Document):
 						'sales_invoice_write_off_rate': a.price * b.write_off_amount/b.total_amount
 					})
 		
-def update_stock(item_code,quantity,stock_uom,uom,stock_location):
-	frappe.msgprint(item_code+str(quantity)+stock_uom+uom+stock_location)
+def update_stock(self,item,is_return):
+	if is_return == 0:
+		add_to_inventory_transaction({
+			'doctype': 'Inventory Transaction',
+			'transaction_type':"Sales Invoice",
+			'transaction_date':self.sale_date,
+			'transaction_number':self.name,
+			'item_code': item.item,
+			'unit':item.uom,
+			'stock_location':item.stock_location,
+			'out_quantity':item.quantity / item.uom_conversion,
+			"uom_conversion":item.uom_conversion,
+			"cost":item.cost,
+			'action': 'Submit'
+		})
+	else:
+		add_to_inventory_transaction({
+			'doctype': 'Inventory Transaction',
+			'transaction_type':"Sales Invoice",
+			'transaction_date':self.sale_date,
+			'transaction_number':self.name,
+			'item_code': item.item,
+			'unit':item.uom,
+			'stock_location':item.stock_location,
+			'in_quantity':item.quantity / item.uom_conversion,
+			"uom_conversion":item.uom_conversion,
+			"cost":item.cost,
+			"Note":"Cancel Sales Invoice",
+			'action': 'Submit'
+		})
 
 	
 @frappe.whitelist()
