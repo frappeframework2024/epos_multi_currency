@@ -38,7 +38,8 @@ frappe.ui.form.on("Sales Invoice", {
 					let row_exist = check_row_exist(frm,barcode,r.message.uom);
 					if(row_exist!=undefined)
                 	{
-						row_exist.doc.quantity = row_exist.doc.quantity + 1 * frm.doc.is_return === 1 ? -1 : 1;
+						row_exist.doc.quantity = row_exist.doc.quantity + 1;
+						row_exist.doc.quantity = frm.doc.is_return === 1 ? row_exist.doc.quantity * -1 : row_exist.doc.quantity;
 						update_item(row_exist.doc,frm);
 						frm.refresh_field('items');
 					}

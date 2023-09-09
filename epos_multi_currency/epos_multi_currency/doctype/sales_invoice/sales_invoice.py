@@ -15,7 +15,14 @@ class SalesInvoice(Document):
 		if self.is_return == 1:
 			for a in self.items:
 				if a.quantity > 0:
-					error_msg = error_msg + "Item {} Quantity Can't Be More Than 0<br/>".format(a.item_code)
+					error_msg = error_msg + "Item {} quantity can't be greater than 0<br/>".format(a.item_code)
+			for b in self.sales_invoice_payment:
+				if b.paid_amount != b.grand_total:
+					error_msg = error_msg + "{} Payment can't be different than grand total<br/>".format(b.currency)
+		else:
+			for a in self.items:
+				if a.quantity < 0:
+					error_msg = error_msg + "Item {} 1qantity can't be negative<br/>".format(a.item_code)
 		if error_msg:
 			frappe.throw(str(error_msg))
 
@@ -47,9 +54,8 @@ class SalesInvoice(Document):
 				else:
 					duplicate.append(a.currency)
 			if(len(duplicate)>0):
-				error_msg="Currency Already Exist: "
 				for a in duplicate:
-					error_msg = error_msg + a + " "
+					error_msg = error_msg + "{} already exist".format(a.currency)
 				frappe.throw(str(error_msg))
 
 		item_currencies = Counter()
