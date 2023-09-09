@@ -10,7 +10,9 @@
   "item",
   "item_name",
   "uom",
-  "base_uom",
+  "stock_uom",
+  "uom_conversion",
+  "uom_list",
   "is_inventory_product",
   "currency",
   "grand_total",
@@ -136,27 +138,39 @@
    "read_only": 1
   },
   {
-   "columns": 1,
-   "fetch_from": "item.uom",
-   "fieldname": "base_uom",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Base UOM",
-   "options": "UOM",
-   "reqd": 1
-  },
-  {
    "fieldname": "cost",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Cost",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item.uom_list",
+   "fieldname": "uom_list",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "UOM List"
+  },
+  {
+   "fieldname": "uom_conversion",
+   "fieldtype": "Float",
+   "label": "UOM Conversion"
+  },
+  {
+   "columns": 1,
+   "fetch_from": "item.uom",
+   "fieldname": "stock_uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Stock UOM",
+   "options": "UOM",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-08 10:21:55.223147",
+ "modified": "2023-09-09 12:05:21.096109",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Stock In Item",

@@ -79,7 +79,7 @@ class SalesInvoice(Document):
 			
 			for a in self.sales_invoice_payment:
 				if a.currency not in item_currency:
-					c = frappe.delete_doc("Sales Invoice Payment",a.name)		
+					c = frappe.delete_doc("Sales Invoice Payment",a.name)
 		
 		for b in self.sales_invoice_payment:
 			for a in self.items:

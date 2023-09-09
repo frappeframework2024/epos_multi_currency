@@ -130,14 +130,15 @@
   {
    "fieldname": "stock_in_payments",
    "fieldtype": "Table",
-   "label": "Stock In Payments",
+   "label": "Payments",
+   "no_copy": 1,
    "options": "Stock In Payment"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-08 08:51:18.958636",
+ "modified": "2023-09-09 13:55:31.359065",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Stock In",

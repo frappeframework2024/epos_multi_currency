@@ -30,6 +30,9 @@ frappe.ui.form.on("Stock In", {
 
 
 	},
+	after_save(frm){
+		frm.reload_doc()
+	},
 	search_items(frm) {
 		if (frm.doc.search_items != undefined) {
 			let barcode = frm.doc.search_items;
@@ -88,15 +91,23 @@ frappe.ui.form.on('Stock In Item', {
 				method: "epos_multi_currency.epos_multi_currency.utils.get_item_uom_price",
 				args: {
 					item_code: doc.item,
-					uom: doc.uom
+					uom: doc.uom,
+					stock_uom:doc.stock_uom
 				},
 				callback: function (r) {
 					if (r.message != undefined) {
-						if (r.message.status == 200) {
+						if(r.message.predefine == 1){
+							doc.uom_conversion = r.message.uom_conversion
 							doc.cost = r.message.cost;
-							doc.whole_sale = r.message.whole_sale;
-							update_item(doc, frm);
+							doc.stock_location = frm.doc.stock_location
 						}
+						else{
+							doc.uom_conversion = r.message.uom_conversion;
+							doc.cost = r.message.cost * doc.uom_conversion;
+							doc.stock_location = frm.doc.stock_location
+						}
+					
+						update_item(doc,frm);
 					}
 				}
 			})
@@ -148,18 +159,19 @@ frappe.ui.form.on('Stock In Item', {
 	},
 	item(frm, cdt, cdn) {
 		let doc = locals[cdt][cdn];
-		console.log("item", doc.item)
 		frappe.call({
 			method: "epos_multi_currency.epos_multi_currency.utils.get_item_uom_price",
 			args: {
 				item_code: doc.item,
-				uom: doc.uom
+				uom: doc.uom,
+				stock_uom:doc.stock_uom
 			},
 			callback: function (r) {
 				if (r.message != undefined) {
 					doc.cost = r.message.cost;
 					doc.whole_sale = r.message.whole_sale;
-					doc.stock_location = frm.doc.stock_location
+					doc.stock_location = frm.doc.stock_location,
+					doc.uom_conversion = r.message.uom_conversion
 					update_item(doc, frm);
 				}
 			}
@@ -223,9 +235,10 @@ function add_product_to_sale_product(frm, p) {
 		doc.item_code = p.item_code;
 		doc.item_name = p.item_name;
 		doc.cost = p.cost;
+		doc.uom_conversion = p.uom_conversion,
 		doc.quantity = 1;
 		doc.uom = p.uom;
-		doc.base_uom = p.uom;
+		doc.stock_uom = p.uom;
 		doc.uom_list = p.uom_list
 		doc.allow_free = p.allow_free;
 		doc.allow_discount = p.allow_discount;

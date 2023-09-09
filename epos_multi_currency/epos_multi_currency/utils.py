@@ -55,30 +55,28 @@ def check_uom_conversion(from_uom, to_uom):
     return conversion
 
 @frappe.whitelist()
-def get_item_uom_price(item_code,uom):
-	try:
-		frappe.flags.mute_messages = True
+def get_item_uom_price(item_code,uom,stock_uom):
+	uom_coversion = get_uom_conversion(uom,stock_uom)
+	if frappe.db.exists("Item UOM", {"parent":item_code,"uom":uom}):
 		p = frappe.get_doc("Item UOM",{"parent":item_code,"uom":uom},["*"])
 		if p :
 			return {
-				"status":200,
 				"cost": p.cost,
 				"whole_sale": p.whole_sale,
 				"price": p.price,
+				"uom_conversion":uom_coversion,
+				"predefine":1
 			}
-		else:
-			return {
-				"status":404,
-				"message":("No UOM")
-			}
-	except frappe.DoesNotExistError:
+			
+	else:
+		p = frappe.get_doc("Item UOM",{"parent":item_code,"uom":stock_uom},["*"])
 		return {
-				"status":404,
-				"message":("No UOM")
-			}
-		
-	finally:
-		frappe.flags.mute_messages = False
+			"cost": p.cost,
+			"whole_sale": p.whole_sale,
+			"price": p.price,
+			"uom_conversion":uom_coversion,
+			"predefine":0
+		}
 
 @frappe.whitelist()
 def get_available_stock(stock_location,item_code):
@@ -154,3 +152,8 @@ def get_currency_total_amount(pcurrency,items):
 	else:
 		total_amount = 0
 	return {"total_amount" : total_amount}
+
+@frappe.whitelist()
+def get_item_uoms(item):
+	uom = frappe.db.sql("""select uom from `tabItem UOM` where parent = '{}'""".format(item))
+	return uom
