@@ -2,7 +2,14 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Sales Invoice", {
-	
+	refresh:function(frm) {
+		if (frm.doc.docstatus == 1 ) {
+			frm.add_custom_button(__('Payment'), function() {
+				frappe.route_options = {"sale_invoice":frm.doc.name}
+				frappe.set_route(['Form', 'Sale Payment', 'new-sale-payment-1']);
+			}, __('Create'));
+		}
+	},
 	onload: function(frm) {
 		if(frm.is_new()){
 			frappe.call({
@@ -28,7 +35,8 @@ frappe.ui.form.on("Sales Invoice", {
 				frappe.call({
 					method: "epos_multi_currency.epos_multi_currency.doctype.sales_invoice.sales_invoice.get_product",
 					args: {
-						barcode:frm.doc.search_items
+						barcode:frm.doc.search_items,
+						stock_location:frm.doc.stock_location
 					},
 					callback: function(r){
 			if(r.message != undefined)
@@ -71,6 +79,30 @@ frappe.ui.form.on("Sales Invoice", {
 		});
 		frm.refresh_field('sales_invoice_payment'); 
 	},
+	stock_location(frm){
+		frm.doc.items.forEach(function(p){
+			p.stock_location = frm.doc.stock_location
+			frappe.call({
+				method: "epos_multi_currency.epos_multi_currency.doctype.sales_invoice.sales_invoice.get_available_stock",
+				args: {
+					stock_location: p.stock_location,
+					item_code: p.item_code
+				},
+				callback: function(r){
+					if(r.message != undefined){
+						p.available_stock = r.message.quantity;
+						frm.refresh_field('items');
+					}
+				}
+			})
+		});
+		frm.refresh_field('items'); 
+	},
+	is_return:function(frm){
+		var df = frappe.meta.get_docfield("Sales Invoice Payment","paid_amount", cur_frm.doc.name);
+    	df.read_only = 1;
+		frm.refresh_field(sales_invoice_payment)
+	}
 });
 
 
@@ -156,15 +188,14 @@ frappe.ui.form.on('Sales Invoice Item', {
     },
 	is_free_item(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
+		doc.discount_type = "Percent"
         if(doc.is_free_item == 1){
-			doc.price = 0;
+			doc.discount = 100;
 		}
 		else{
-			doc.price = doc.base_price;
+			doc.discount = 0;
 		}
-		doc.sub_total = doc.quantity*doc.price;
-		doc.discount = 0;
-		doc.discount_amount = 0;
+		doc.discount_amount = (doc.sub_total * doc.discount/100);
 		doc.grand_total = doc.sub_total - (doc.discount_amount || 0);
         frm.refresh_field('items');
     },
@@ -207,6 +238,7 @@ frappe.ui.form.on('Sales Invoice Item', {
     },
   });
 frappe.ui.form.on('Sales Invoice Payment', {
+	
 	currency(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
 		frappe.call({
@@ -291,6 +323,7 @@ function add_product_to_sale_product(frm,p){
 		doc.stock_location = frm.doc.stock_location;
 		doc.uom_conversion = 1
 		doc.cost = p.cost
+		doc.available_stock = p.available_stock
 		update_item(doc,frm);
 	}
 }

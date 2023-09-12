@@ -11,10 +11,10 @@
   "naming_series",
   "customer",
   "stock_location",
-  "branch",
   "is_return",
   "column_break_nkmx",
   "document_number",
+  "staff",
   "sale_date",
   "sale_time",
   "items_section",
@@ -24,28 +24,31 @@
   "discount_percent",
   "section_break_ouvy",
   "sales_invoice_payment",
-  "amended_from"
+  "section_break_wrvf",
+  "sales_note",
+  "amended_from",
+  "staff_full_name",
+  "staff_contact_no",
+  "customer_name",
+  "customer_address",
+  "customer_phone_1",
+  "customer_phone_2",
+  "khmer_day"
  ],
  "fields": [
   {
    "fieldname": "document_number",
    "fieldtype": "Data",
-   "label": "Document Number",
-   "unique": 1
+   "label": "Document Number"
   },
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_filter": 1,
    "in_list_view": 1,
    "label": "Customer",
    "options": "Customer",
    "reqd": 1
-  },
-  {
-   "fieldname": "branch",
-   "fieldtype": "Link",
-   "label": "Branch",
-   "options": "Branch"
   },
   {
    "fieldname": "column_break_nkmx",
@@ -128,12 +131,81 @@
    "options": "Sales Invoice",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "sales_note",
+   "fieldtype": "Long Text",
+   "label": "Sales Note"
+  },
+  {
+   "fieldname": "staff",
+   "fieldtype": "Link",
+   "label": "Staff",
+   "options": "Staff"
+  },
+  {
+   "fieldname": "section_break_wrvf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "staff.full_name",
+   "fieldname": "staff_full_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Staff Full Name"
+  },
+  {
+   "fetch_from": "staff.contact_no",
+   "fieldname": "staff_contact_no",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Staff Contact No"
+  },
+  {
+   "fetch_from": "customer.customer_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Customer Name"
+  },
+  {
+   "fetch_from": "customer.address",
+   "fieldname": "customer_address",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Customer Address"
+  },
+  {
+   "fetch_from": "customer.phone__1",
+   "fieldname": "customer_phone_1",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Customer Phone 1"
+  },
+  {
+   "fetch_from": "customer.phone__2",
+   "fieldname": "customer_phone_2",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Customer Phone 2"
+  },
+  {
+   "fieldname": "khmer_day",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Khmer Day"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2023-09-08 15:45:58.969039",
+ "links": [
+  {
+   "group": "Payment",
+   "link_doctype": "Sale Payment",
+   "link_fieldname": "sale_invoice"
+  }
+ ],
+ "modified": "2023-09-12 13:54:21.530033",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice",

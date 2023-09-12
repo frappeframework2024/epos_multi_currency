@@ -1,10 +1,13 @@
 # Copyright (c) 2023, ESTC and contributors
 # For license information, please see license.txt
-from epos_multi_currency.epos_multi_currency.utils import get_uom_conversion,add_to_inventory_transaction
+from epos_multi_currency.utils import get_uom_conversion,add_to_inventory_transaction
 import frappe
 from frappe.model.document import Document
 import json
+from datetime import datetime
 from collections import Counter
+from frappe import _
+from frappe.model.naming import make_autoname
 
 class SalesInvoice(Document):
 
@@ -16,9 +19,7 @@ class SalesInvoice(Document):
 			for a in self.items:
 				if a.quantity > 0:
 					error_msg = error_msg + "Item {} quantity can't be greater than 0<br/>".format(a.item_code)
-			for b in self.sales_invoice_payment:
-				if b.paid_amount != b.grand_total:
-					error_msg = error_msg + "{} Payment can't be different than grand total<br/>".format(b.currency)
+
 		else:
 			for a in self.items:
 				if a.quantity < 0:
@@ -35,6 +36,10 @@ class SalesInvoice(Document):
 			update_stock(self,a,self.is_return)
 
 	def before_save(self):
+		date_object = datetime.strptime(self.sale_date, '%Y-%m-%d')
+		day_name = date_object.strftime('%A')
+		self.khmer_day = _(day_name)
+
 		for a in self.items:
 			discount_rate = 0
 			if a.discount_type == "Percent":
@@ -43,8 +48,13 @@ class SalesInvoice(Document):
 				discount_rate = a.discount_amount or 0/a.quantity
 			a.price_after_discount = a.price - discount_rate
 
-	def on_update(self):
+	def after_insert(self):
+		if not self.document_number:
+			document_number = make_autoname(".#####", "", self)
+			frappe.db.set_value('Sales Invoice', self.name, 'document_number', document_number, update_modified=False)
 
+	def on_update(self):
+	
 		if len(self.sales_invoice_payment) > 0:
 			already = []
 			duplicate = []
@@ -110,11 +120,12 @@ class SalesInvoice(Document):
 			for a in self.items:
 				if a.currency == b.currency:
 					frappe.db.set_value('Sales Invoice Item', a.name, {
-						'sales_invoice_discount_rate': a.price * b.discount_amount/b.total_amount,
-						'sales_invoice_write_off_rate': a.price * b.write_off_amount/b.total_amount
+						'sales_invoice_discount_rate': 0 if a.price == 0 or b.discount_amount ==0 else a.price * b.discount_amount/b.total_amount,
+						'sales_invoice_write_off_rate': 0 if a.price ==0 or b.write_off_amount ==0 else a.price * b.write_off_amount/b.total_amount
 					})
 		
 def update_stock(self,item,is_return):
+	
 	if is_return == 0:
 		add_to_inventory_transaction({
 			'doctype': 'Inventory Transaction',
@@ -124,7 +135,7 @@ def update_stock(self,item,is_return):
 			'item_code': item.item,
 			'unit':item.uom,
 			'stock_location':item.stock_location,
-			'out_quantity':item.quantity / item.uom_conversion,
+			'out_quantity':item.quantity * item.uom_conversion,
 			"uom_conversion":item.uom_conversion,
 			"cost":item.cost,
 			'action': 'Submit'
@@ -138,7 +149,7 @@ def update_stock(self,item,is_return):
 			'item_code': item.item,
 			'unit':item.uom,
 			'stock_location':item.stock_location,
-			'in_quantity':item.quantity / item.uom_conversion,
+			'in_quantity':item.quantity * item.uom_conversion,
 			"uom_conversion":item.uom_conversion,
 			"cost":item.cost,
 			"Note":"Cancel Sales Invoice",
@@ -147,7 +158,7 @@ def update_stock(self,item,is_return):
 
 	
 @frappe.whitelist()
-def get_product(barcode):
+def get_product(stock_location,barcode):
 	try:
 		frappe.flags.mute_messages = True
 		p = frappe.get_doc("Item",{"item_code":barcode,"enable":1},["*"])
@@ -162,7 +173,8 @@ def get_product(barcode):
 				"price":p.price,
 				"allow_discount":p.allow_discount,
 				"is_inventory_product":p.is_inventory_product,
-				"uom_list":p.uom_list
+				"uom_list":p.uom_list,
+				"available_stock":get_available_stock(stock_location,barcode)["quantity"] or 0
 			}
 		else:
 			return {
@@ -203,26 +215,16 @@ def get_item_uom_price(item_code,uom,stock_uom):
 		}
 @frappe.whitelist()
 def get_available_stock(stock_location,item_code):
-	try:
-		frappe.flags.mute_messages = True
+	if frappe.db.exists("Stock Location Item",{"parent":item_code,"stock_location":stock_location}):
 		p = frappe.get_doc("Stock Location Item",{"parent":item_code,"stock_location":stock_location},["*"])
 		if p :
 			return {
 				"quantity": p.quantity
 			}
-		else:
-			return {
-				"status":404,
-				"message":("No Stock Location")
-			}
-	except frappe.DoesNotExistError:
+	else:
 		return {
-				"status":404,
-				"message":("No Stock Location")
-			}
-		
-	finally:
-		frappe.flags.mute_messages = False
+			"quantity": 0
+		}
 
 @frappe.whitelist()
 def get_item_uom_list(item_code):
