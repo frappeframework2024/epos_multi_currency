@@ -14,7 +14,7 @@
   "is_return",
   "column_break_nkmx",
   "document_number",
-  "staff",
+  "employee",
   "sale_date",
   "sale_time",
   "items_section",
@@ -33,7 +33,8 @@
   "customer_address",
   "customer_phone_1",
   "customer_phone_2",
-  "khmer_day"
+  "khmer_day",
+  "status"
  ],
  "fields": [
   {
@@ -42,6 +43,7 @@
    "label": "Document Number"
   },
   {
+   "default": "General Customer",
    "fieldname": "customer",
    "fieldtype": "Link",
    "in_filter": 1,
@@ -97,6 +99,7 @@
    "fieldname": "sales_invoice_payment",
    "fieldtype": "Table",
    "label": "Sales Invoice Payment",
+   "no_copy": 1,
    "options": "Sales Invoice Payment"
   },
   {
@@ -138,24 +141,18 @@
    "label": "Sales Note"
   },
   {
-   "fieldname": "staff",
-   "fieldtype": "Link",
-   "label": "Staff",
-   "options": "Staff"
-  },
-  {
    "fieldname": "section_break_wrvf",
    "fieldtype": "Section Break"
   },
   {
-   "fetch_from": "staff.full_name",
+   "fetch_from": "employee.employee_name",
    "fieldname": "staff_full_name",
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Staff Full Name"
   },
   {
-   "fetch_from": "staff.contact_no",
+   "fetch_from": "employee.phone_number_1",
    "fieldname": "staff_contact_no",
    "fieldtype": "Data",
    "hidden": 1,
@@ -194,6 +191,23 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Khmer Day"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "\nDraft\nReturn\nSubmitted\nPaid\nPartly Paid\nUnpaid\nCancelled",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -205,7 +219,7 @@
    "link_fieldname": "sale_invoice"
   }
  ],
- "modified": "2023-09-12 13:54:21.530033",
+ "modified": "2023-09-13 17:10:45.850919",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice",
@@ -223,6 +237,33 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Sales User",
+   "select": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "delete": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Master Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Sales User",
+   "share": 1
   }
  ],
  "sort_field": "modified",

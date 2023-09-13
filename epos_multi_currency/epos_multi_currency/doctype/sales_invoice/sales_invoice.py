@@ -36,6 +36,7 @@ class SalesInvoice(Document):
 			update_stock(self,a,self.is_return)
 
 	def before_save(self):
+		self.status = "Unpaid" if self.is_return == 0 else "Return"
 		date_object = datetime.strptime(self.sale_date, '%Y-%m-%d')
 		day_name = date_object.strftime('%A')
 		self.khmer_day = _(day_name)
@@ -43,7 +44,7 @@ class SalesInvoice(Document):
 		for a in self.items:
 			discount_rate = 0
 			if a.discount_type == "Percent":
-				discount_rate = a.price*a.discount/100; 
+				discount_rate = 0 if a.discount is None or 0 else a.price*a.discount/100; 
 			else:
 				discount_rate = a.discount_amount or 0/a.quantity
 			a.price_after_discount = a.price - discount_rate
@@ -54,7 +55,7 @@ class SalesInvoice(Document):
 			frappe.db.set_value('Sales Invoice', self.name, 'document_number', document_number, update_modified=False)
 
 	def on_update(self):
-	
+		
 		if len(self.sales_invoice_payment) > 0:
 			already = []
 			duplicate = []
@@ -90,7 +91,7 @@ class SalesInvoice(Document):
 							"write_off_amount":b.write_off_amount or 0,
 							"grand_total":grand_total,
 							"paid_amount":b.paid_amount or 0,
-							"balace":b.balance or 0,
+							"balance":b.balance or 0,
 							"parent":self.name,
 							"parentfield":"sales_invoice_payment",
 							"parenttype":"Sales Invoice"})
@@ -99,11 +100,11 @@ class SalesInvoice(Document):
 				c = frappe.get_doc({"doctype":"Sales Invoice Payment", 
 						"currency":currency,
 						"total_amount":grand_total,
-						"discount_amount":0,
+						"discount_amount": 0 if self.discount_percent is None or 0 else grand_total * self.discount_percent/100,
 						"write_off_amount": 0,
 						"grand_total":grand_total,
 						"paid_amount":0,
-						"balace":0,
+						"balance":grand_total,
 						"parent":self.name,
 						"parentfield":"sales_invoice_payment",
 						"parenttype":"Sales Invoice"})
@@ -113,7 +114,7 @@ class SalesInvoice(Document):
 		for a in self.sales_invoice_payment:
 			c = frappe.get_doc("Sales Invoice Payment",a.name)
 			c.grand_total = c.total_amount - (c.discount_amount + c.write_off_amount)
-			c.balance = c.paid_amount - c.grand_total
+			c.balance = c.grand_total - c.paid_amount
 			c.save()
 
 		for b in self.sales_invoice_payment:

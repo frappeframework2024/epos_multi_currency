@@ -49,7 +49,7 @@ frappe.ui.form.on("Stock Transfer", {
 		if (frm.doc.search_items != undefined) {
 			let barcode = frm.doc.search_items;
 			frappe.call({
-				method: "epos_multi_currency.epos_multi_currency.utils.get_product_by_barcode",
+				method: "epos_multi_currency.utils.get_product_by_barcode",
 				args: {
 					barcode: frm.doc.search_items
 				},
@@ -100,7 +100,7 @@ frappe.ui.form.on('Stock Transfer Item', {
 		let doc = locals[cdt][cdn];
 		if (doc.item && doc.uom) {
 			frappe.call({
-				method: "epos_multi_currency.epos_multi_currency.utils.get_item_uom_price",
+				method: "epos_multi_currency.utils.get_item_uom_price",
 				args: {
 					item_code: doc.item,
 					uom: doc.uom,
@@ -129,10 +129,10 @@ frappe.ui.form.on('Stock Transfer Item', {
 	source_stock_location(frm, cdt, cdn) {
 		let doc = locals[cdt][cdn];
 		frappe.call({
-			method: "epos_multi_currency.epos_multi_currency.utils.get_available_stock",
+			method: "epos_multi_currency.utils.get_available_stock",
 			args: {
 				stock_location: doc.source_stock_location,
-				item_code: doc.item_item
+				item_code: doc.item
 			},
 			callback: function (r) {
 				if (r.message != undefined) {
@@ -145,10 +145,10 @@ frappe.ui.form.on('Stock Transfer Item', {
     target_stock_location(frm, cdt, cdn) {
 		let doc = locals[cdt][cdn];
 		frappe.call({
-			method: "epos_multi_currency.epos_multi_currency.utils.get_available_stock",
+			method: "epos_multi_currency.utils.get_available_stock",
 			args: {
 				stock_location: doc.target_stock_location,
-				item_code: doc.item_item
+				item_code: doc.item
 			},
 			callback: function (r) {
 				if (r.message != undefined) {
@@ -166,7 +166,7 @@ frappe.ui.form.on('Stock Transfer Item', {
 	item(frm, cdt, cdn) {
 		let doc = locals[cdt][cdn];
 		frappe.call({
-			method: "epos_multi_currency.epos_multi_currency.utils.get_item_uom_price",
+			method: "epos_multi_currency.utils.get_item_uom_price",
 			args: {
 				item_code: doc.item,
 				uom: doc.uom,

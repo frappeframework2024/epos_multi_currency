@@ -5,6 +5,5 @@
 from frappe.model.document import Document
 
 
-class Staff(Document):
-	def on_update(self):
-		self.full_name = self.first_name + " " + self.last_name	
+class StockTakeItem(Document):
+	pass

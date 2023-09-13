@@ -3,7 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
-from epos_multi_currency.epos_multi_currency.utils import check_uom_conversion
+from epos_multi_currency.utils import check_uom_conversion
 
 class UnitofMeasurementConversion(Document):
 	# def after_insert(self):

@@ -57,7 +57,8 @@
    "default": "1",
    "fieldname": "is_inventory_product",
    "fieldtype": "Check",
-   "label": "Is Inventory Product"
+   "label": "Is Inventory Product",
+   "set_only_once": 1
   },
   {
    "fieldname": "currency",
@@ -110,7 +111,8 @@
   {
    "fieldname": "cost",
    "fieldtype": "Float",
-   "label": "Cost"
+   "label": "Cost",
+   "permlevel": 1
   },
   {
    "fieldname": "whole_sale",
@@ -204,7 +206,7 @@
    "link_fieldname": "item"
   }
  ],
- "modified": "2023-09-08 16:12:15.311477",
+ "modified": "2023-09-13 14:58:05.897908",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Item",
@@ -234,6 +236,30 @@
    "role": "Product Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Sales User",
+   "select": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Sales Manager",
+   "select": 1,
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Product Manager",
+   "write": 1
+  },
+  {
+   "export": 1,
+   "permlevel": 1,
+   "read": 1,
+   "role": "Sales Manager"
   }
  ],
  "sort_field": "modified",

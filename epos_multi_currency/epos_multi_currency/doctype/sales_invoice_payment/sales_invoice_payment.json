@@ -40,6 +40,7 @@
    "default": "0",
    "fieldname": "paid_amount",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Paid Amount",
    "read_only": 1
   },
@@ -47,18 +48,21 @@
    "default": "0",
    "fieldname": "balance",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Balance",
    "read_only": 1
   },
   {
    "fieldname": "currency",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Currency",
    "options": "Currency"
   },
   {
    "fieldname": "grand_total",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Grand Total"
   },
   {
@@ -79,7 +83,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-12 15:42:46.329484",
+ "modified": "2023-09-13 16:07:31.134063",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice Payment",

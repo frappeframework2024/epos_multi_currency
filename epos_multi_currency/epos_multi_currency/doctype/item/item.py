@@ -2,7 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
-from epos_multi_currency.epos_multi_currency.utils import add_to_inventory_transaction
+from epos_multi_currency.utils import add_to_inventory_transaction
 
 from frappe.model.document import Document
 from frappe.utils import fmt_money

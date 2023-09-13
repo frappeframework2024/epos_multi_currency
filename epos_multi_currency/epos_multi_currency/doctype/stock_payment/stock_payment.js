@@ -1,7 +1,7 @@
 // Copyright (c) 2023, ESTC and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Sale Payment", {
+frappe.ui.form.on("Stock Payment", {
     refresh(frm) {
         frm.fields_dict["payments"].grid.wrapper.find('.grid-remove-rows').hide();
         frm.fields_dict["payments"].grid.wrapper.find('.grid-add-row').hide();
@@ -23,10 +23,10 @@ frappe.ui.form.on("Sale Payment", {
         
     },
     
-    sale_invoice: function (frm) {
+    stock_in: function (frm) {
         frm.clear_table('payments')
-        frappe.call('epos_multi_currency.epos_multi_currency.doctype.sale_payment.sale_payment.get_unpaid_currency', {
-            sale_invoice: frm.doc.sale_invoice
+        frappe.call('epos_multi_currency.epos_multi_currency.doctype.stock_payment.stock_payment.get_unpaid_currency', {
+            stock_in: frm.doc.stock_in
         }).then(r => {
 
             $.each(r.message, function (i, d) {
@@ -45,7 +45,7 @@ frappe.ui.form.on("Sale Payment", {
     }
 });
 
-frappe.ui.form.on('Sales Payment Currency', {
+frappe.ui.form.on('Stock Payment Currency', {
     payment_amount:function(frm,cdt,cdn){
         let doc=   locals[cdt][cdn];
         doc.balance = doc.grand_total - (doc.payment_amount + doc.paid_amount)

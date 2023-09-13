@@ -4,41 +4,24 @@
 import frappe
 from frappe.model.document import Document
 from collections import Counter
-from epos_multi_currency.epos_multi_currency.utils import add_to_inventory_transaction,get_uom_conversion
-
+from epos_multi_currency.utils import add_to_inventory_transaction,get_uom_conversion
+from datetime import datetime
 
 class StockIn(Document):
 	def validate(self):
-		a = Counter()
-		# frappe.throw(str(a))
+		error_msg=""
 		for item in self.items:
 			if not item.stock_location:
 				item.stock_location = self.stock_location
-
-	def after_insert(self):
-		c = Counter()
-		for v in self.items:
-			c[v.currency] += v.grand_total
-
-		for currency, grand_total in c.items():
-			c = frappe.get_doc({
-       					"doctype":"Stock In Payment", 
-					  	"currency":currency,
-					  	"total_amount":grand_total,
-					  	"parent":self.name,
-					  	"parentfield":"stock_in_payments",
-					  	"parenttype":"Stock In"
-       				})
-			c.insert()
-		self.reload()
+			if item.quantity < 0:
+				error_msg = error_msg + "Item {} quantity can't be smaller than 0<br/>".format(item.item)
+		if len(error_msg)>0:
+			frappe.throw(error_msg)
+	def before_save(self):
+		self.status = "Unpaid"
 
 	def on_update(self):
-		
-		item_currencies = Counter()
-		for v in self.items:
-			item_currencies[v.currency] += v.grand_total
-
-		if len(self.stock_in_payments)>0:
+		if len(self.stock_in_payments) > 0:
 			already = []
 			duplicate = []
 			for a in self.stock_in_payments:
@@ -47,61 +30,64 @@ class StockIn(Document):
 				else:
 					duplicate.append(a.currency)
 			if(len(duplicate)>0):
-				error_msg="Currency Already Exist: "
 				for a in duplicate:
-					error_msg = error_msg + a + " " + str(self)
+					error_msg = error_msg + "{} already exist".format(a.currency)
 				frappe.throw(str(error_msg))
 
-			for currency, grand_total in item_currencies.items():
-				for a in self.stock_in_payments:
-					c = frappe.get_doc("Stock In Payment",a.name)
-					if c.currency == currency:
-						c.total_amount = grand_total
-						c.grand_total = c.total_amount - (c.discount_amount + c.write_off_amount)
-						c.balance = c.paid_amount - c.grand_total
-						c.save()
-			
+		item_currencies = Counter()
+		for v in self.items:
+			item_currencies[v.currency] += v.grand_total
 
+		payment_currency=[]
+		for a in self.stock_in_payments:
+			payment_currency.append(a)
 		
-		item_currency=[]
-		for currency,grand_total in item_currencies.items():
-			item_currency.append(currency)
+		frappe.db.sql("delete from `tabStock In Payment` where parent = '{}' ".format(self.name))
 
-		if len(item_currency) >= len(self.stock_in_payments):
-			for a in self.stock_in_payments:
-				item_currency.remove(a.currency)
-			for currency, grand_total in item_currencies.items():
-				if currency in item_currency:
+		for currency, grand_total in item_currencies.items():
+			list_payment_currency = list([a for a in payment_currency if a.currency == currency])
+			if len(list_payment_currency) > 0:
+				b = list_payment_currency[0]
+				if currency == b.currency:
 					c = frappe.get_doc({"doctype":"Stock In Payment", 
 							"currency":currency,
 							"total_amount":grand_total,
+							"discount_amount":b.discount_amount or 0,
+							"write_off_amount":b.write_off_amount or 0,
 							"grand_total":grand_total,
-							"balance" : grand_total *-1,
+							"paid_amount":b.paid_amount or 0,
+							"balance":b.balance or 0,
 							"parent":self.name,
 							"parentfield":"stock_in_payments",
 							"parenttype":"Stock In"})
 					c.insert()
-		else:
-			
-			for a in self.stock_in_payments:
-				if a.currency not in item_currency:
-					c = frappe.delete_doc("Stock In Payment",a.name)
+			else:
+				c = frappe.get_doc({"doctype":"Stock In Payment", 
+						"currency":currency,
+						"total_amount":grand_total,
+						"discount_amount": 0 if self.discount_percent is None or 0 else grand_total * self.discount_percent/100,
+						"write_off_amount": 0,
+						"grand_total":grand_total,
+						"paid_amount":0,
+						"balance":grand_total,
+						"parent":self.name,
+						"parentfield":"stock_in_payments",
+						"parenttype":"Stock In"})
+				c.insert()
+		self.reload()
 
 	def on_submit(self):
-		item_currencies = Counter()
-		for v in self.items:
-			item_currencies[v.currency] += v.grand_total
-		for currency, grand_total in item_currencies.items():
-			for a in self.stock_in_payments:
-				payment = frappe.db.get_value("Stock In Payment",a.name, ["currency", "paid_amount"], as_dict=1)
-				if payment.currency == currency and payment.paid_amount != grand_total:
-					frappe.throw(("Paid amount must equal grand total amount for {}".format(frappe.bold(currency))))
-		"""Update product inventory when submit"""
-		frappe.enqueue('epos_multi_currency.epos_multi_currency.doctype.stock_in.stock_in.update_inventory_on_submit',self=self)
+		if len(self.items) >= 20:
+			frappe.enqueue('epos_multi_currency.stock.doctype.stock_in.stock_in.update_inventory_on_submit',self=self)
+		else:
+			update_inventory_on_submit(self)
+
+
 	def on_cancel(self):
-		"""	update product inventory when cancel
-  		"""
-		frappe.enqueue('epos_multi_currency.epos_multi_currency.doctype.stock_in.stock_in.update_inventory_on_cancel',self=self)
+		if len(self.items) >= 20:
+			frappe.enqueue('epos_multi_currency.stock.doctype.stock_in.stock_in.update_inventory_on_cancel',self=self)
+		else:
+			update_inventory_on_cancel(self)
 
 
     
@@ -109,8 +95,7 @@ def update_inventory_on_submit(self):
 	
 	for p in self.items:
 		if p.is_inventory_product:
-			
-			uom_conversion = get_uom_conversion(p.stock_uom, p.uom)
+			uom_conversion =  get_uom_conversion(p.uom, p.stock_uom)
 			add_to_inventory_transaction({
 				'doctype': 'Inventory Transaction',
 				'transaction_type':"Stock In",
@@ -118,8 +103,9 @@ def update_inventory_on_submit(self):
 				'transaction_number':self.name,
 				'item_code': p.item,
 				'unit':p.uom,
+				'stock_unit':p.stock_uom,
 				'stock_location':self.stock_location,
-				'in_quantity':p.quantity / uom_conversion,
+				'in_quantity':p.quantity * uom_conversion,
 				"uom_conversion":uom_conversion,
 				"cost":p.cost,
 				'note': 'New Stock In submitted.',
@@ -129,22 +115,25 @@ def update_inventory_on_submit(self):
 def update_inventory_on_cancel(self):
 	for p in self.items:
 		if p.is_inventory_product:
-			uom_conversion = get_uom_conversion(p.stock_uom, p.uom)
+			uom_conversion = get_uom_conversion(p.uom, p.stock_uom)
 			print(uom_conversion)
 			add_to_inventory_transaction({
 				'doctype': 'Inventory Transaction',
 				'transaction_type':"Stock In",
-				'transaction_date':self.posting_date,
+				'transaction_date':self.stock_in_date,
 				'transaction_number':self.name,
 				'item_code': p.item,
 				'unit':p.uom,
+				'stock_unit':p.stock_uom,
 				'stock_location':self.stock_location,
-				'out_quantity':p.quantity / uom_conversion,
+				'out_quantity':p.quantity * uom_conversion,
     			"uom_conversion":uom_conversion,
 				"cost":p.cost,
-				'note': 'Purchase order cancelled.',
+				'note': 'Stock In cancelled.',
 				'action': 'Cancel'
 			})
+
+
 
 
 

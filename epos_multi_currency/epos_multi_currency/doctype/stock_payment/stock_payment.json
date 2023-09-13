@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2023-09-11 14:32:06.090724",
+ "creation": "2023-09-13 14:39:53.013995",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -13,9 +13,9 @@
   "payment_date",
   "reference",
   "column_break_mvdb",
-  "sale_invoice",
-  "customer",
-  "customer_name",
+  "stock_in",
+  "supplier",
+  "supplier_name",
   "section_break_gxpm",
   "payments",
   "amended_from"
@@ -24,6 +24,13 @@
   {
    "fieldname": "section_break_gjmj",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "SIP-.YYYY.-.####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "SIP-.YYYY.-.####"
   },
   {
    "fieldname": "payment_date",
@@ -42,25 +49,17 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "sale_invoice",
+   "fieldname": "stock_in",
    "fieldtype": "Link",
-   "label": "Sale Invoice",
-   "options": "Sales Invoice",
+   "label": "Stock In",
+   "options": "Stock In",
    "reqd": 1
   },
   {
-   "fetch_from": "sale_invoice.customer",
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "customer.customer_name",
-   "fieldname": "customer_name",
+   "fetch_from": "stock_in.supplier_name",
+   "fieldname": "supplier_name",
    "fieldtype": "Data",
-   "label": "Customer Name",
+   "label": "Supplier name",
    "read_only": 1
   },
   {
@@ -68,17 +67,10 @@
    "fieldtype": "Section Break"
   },
   {
-   "default": "REC-.YYYY.-.####",
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Naming Series",
-   "options": "REC-.YYYY.-.####"
-  },
-  {
    "fieldname": "payments",
    "fieldtype": "Table",
    "label": "Payment",
-   "options": "Sales Payment Currency",
+   "options": "Stock Payment Currency",
    "reqd": 1
   },
   {
@@ -89,15 +81,32 @@
    "options": "Sale Payment",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Sale Payment",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fetch_from": "stock_in.supplier",
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-13 14:51:11.667248",
+ "modified": "2023-09-13 15:01:38.528249",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
- "name": "Sale Payment",
+ "name": "Stock Payment",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
@@ -111,27 +120,6 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "print": 1,
-   "read": 1,
-   "role": "Sales User",
-   "select": 1,
-   "submit": 1,
-   "write": 1
-  },
-  {
-   "amend": 1,
-   "cancel": 1,
-   "delete": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Sales Manager",
-   "submit": 1,
    "write": 1
   }
  ],

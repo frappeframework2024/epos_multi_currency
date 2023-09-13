@@ -3,10 +3,14 @@
 
 frappe.ui.form.on("Sales Invoice", {
 	refresh:function(frm) {
-		if (frm.doc.docstatus == 1 ) {
+		frm.add_custom_button(__('Reload'), function() {
+			frm.reload_doc()
+		});
+		if (frm.doc.docstatus == 1 && frm.doc.status != "Paid") {
 			frm.add_custom_button(__('Payment'), function() {
-				frappe.route_options = {"sale_invoice":frm.doc.name}
-				frappe.set_route(['Form', 'Sale Payment', 'new-sale-payment-1']);
+				frappe.new_doc('Sale Payment', {
+					sale_invoice:frm.doc.name
+				})
 			}, __('Create'));
 		}
 	},
@@ -24,6 +28,20 @@ frappe.ui.form.on("Sales Invoice", {
 			current =new Date();
 			frm.set_value("sale_date", current);
 			frm.set_value("sale_time", current.getHours()+":"+current.getMinutes()+":"+current.getSeconds());
+		}else{
+			frappe.call({
+				type: "GET",
+				method: "epos_multi_currency.utils.get_sales_invoice_stat",
+				args: { "sales_invoice": frm.doc.name },
+				callback: function (r) {
+					r.message.forEach(element => {
+						console.log(element)
+						frm.dashboard.add_indicator(__('{1} : {0}', [format_currency(element.grand_total,element.currency),element.currency,element.symbol]), 'green')
+						
+					});
+					
+				}
+			})
 		}
 	},
 	after_save(frm){
@@ -75,7 +93,7 @@ frappe.ui.form.on("Sales Invoice", {
 		frm.doc.sales_invoice_payment.forEach(function(p){
 			p.discount_amount = p.total_amount * frm.doc.discount_percent/100
 			p.grand_total = p.total_amount -  (p.discount_amount + p.write_off_amount)
-			p.balance = p.paid_amount - p.grand_total
+			p.balance = p.grand_total - p.paid_amount
 		});
 		frm.refresh_field('sales_invoice_payment'); 
 	},
@@ -251,7 +269,7 @@ frappe.ui.form.on('Sales Invoice Payment', {
 				if(r.message != undefined){
 					doc.total_amount = r.message.total_amount;
 					doc.grand_total = doc.total_amount - (doc.discount_amount - doc.write_off_amount)
-					doc.balance = doc.paid_amount - doc.grand_total
+					doc.balance = doc.grand_total - doc.paid_amount
 					frm.refresh_field('sales_invoice_payment');
 				}
 			}
@@ -260,19 +278,19 @@ frappe.ui.form.on('Sales Invoice Payment', {
 	discount_amount(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
 		doc.grand_total = doc.total_amount - (doc.discount_amount + doc.write_off_amount)
-		doc.balance = doc.paid_amount - doc.grand_total 
+		doc.balance = doc.grand_total - doc.paid_amount
 		frm.refresh_field('sales_invoice_payment');
 	},
 	write_off_amount(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
 		doc.grand_total = doc.total_amount - (doc.discount_amount + doc.write_off_amount)
-		doc.balance = doc.paid_amount - doc.grand_total 
+		doc.balance = doc.grand_total  - doc.paid_amount
 		frm.refresh_field('sales_invoice_payment');
 	},
 	paid_amount(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
 		doc.grand_total = doc.total_amount - (doc.discount_amount + doc.write_off_amount)
-		doc.balance = doc.paid_amount - doc.grand_total 
+		doc.balance = doc.grand_total - doc.paid_amount
 		frm.refresh_field('sales_invoice_payment');
 	}
 });

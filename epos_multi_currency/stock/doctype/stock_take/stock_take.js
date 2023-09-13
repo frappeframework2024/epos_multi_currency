@@ -1,38 +1,7 @@
 // Copyright (c) 2023, ESTC and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Stock In", {
-	setup: function (frm) {
-		frm.set_query("uom", "items", function (doc, cdt, cdn) {
-			let item = locals[cdt][cdn];
-			const uoms = item.uom_list.split(",")
-			return {
-				filters: [
-					['UOM', 'unit_name', 'in', uoms]
-				]
-			};
-		});
-	},
-	refresh:function(frm) {
-		frm.add_custom_button(__('Reload'), function() {
-			frm.reload_doc()
-		});
-		if (frm.doc.docstatus == 1 && frm.doc.status != "Paid") {
-			frm.add_custom_button(__('Payment'), function() {
-				frappe.new_doc('Stock Payment', {
-					stock_in:frm.doc.name
-				})
-			}, __('Create'));
-		}
-	},
-	discount_percent(frm){
-		frm.doc.stock_in_payments.forEach(function(p){
-			p.discount_amount = p.total_amount * frm.doc.discount_percent/100
-			p.grand_total = p.total_amount -  (p.discount_amount + p.write_off_amount)
-			p.balance = p.grand_total - p.paid_amount
-		});
-		frm.refresh_field('stock_in_payments'); 
-	},
+frappe.ui.form.on("Stock Take", {
 	onload: function (frm) {
 		frappe.call({
 			method: "epos_multi_currency.utils.get_default_stock_location",
@@ -45,7 +14,7 @@ frappe.ui.form.on("Stock In", {
 		})
 		if (frm.is_new()) {
 			current = new Date();
-			frm.set_value("stock_in_date", current);
+			frm.set_value("stock_take_date", current);
 		}
 	},
 
@@ -66,6 +35,7 @@ frappe.ui.form.on("Stock In", {
 							let row_exist = check_row_exist(frm, barcode, r.message.uom);
 							if (row_exist != undefined) {
 								row_exist.doc.quantity = row_exist.doc.quantity + 1;
+								row_exist.doc.quantity = row_exist.doc.quantity * -1;
 								update_item(row_exist.doc, frm);
 								frm.refresh_field('items');
 							}
@@ -102,7 +72,7 @@ frappe.ui.form.on("Stock In", {
 	},
 });
 
-frappe.ui.form.on('Stock In Item', {
+frappe.ui.form.on('Stock Take Item', {
 	uom(frm, cdt, cdn) {
 		let doc = locals[cdt][cdn];
 		if (doc.item && doc.uom) {
@@ -153,7 +123,7 @@ frappe.ui.form.on('Stock In Item', {
 		let doc = locals[cdt][cdn];
 		update_item(doc, frm);
 	},
-	price(frm, cdt, cdn) {
+	cost(frm, cdt, cdn) {
 		let doc = locals[cdt][cdn];
 		update_item(doc, frm);
 	},
@@ -199,39 +169,6 @@ frappe.ui.form.on('Stock In Item', {
 	},
 
 })
-
-
-frappe.ui.form.on('Stock In Payment', {
-	currency(frm,cdt, cdn) {
-        let doc=   locals[cdt][cdn];
-		frappe.call({
-			method: "epos_multi_currency.utils.get_currency_total_amount",
-			args: {
-				pcurrency: doc.currency,
-				items:frm.doc.items
-			},
-			callback: function(r){
-				if(r.message != undefined){
-					doc.total_amount = r.message.total_amount;
-					doc.grand_total = doc.total_amount - (doc.discount_amount - doc.write_off_amount)
-					doc.balance = doc.grand_total - doc.paid_amount
-					frm.refresh_field('sales_invoice_payment');
-				}
-			}
-		})
-    },
-	discount_amount(frm,cdt, cdn) {
-		let doc=   locals[cdt][cdn];
-		doc.balance =  doc.grand_total - doc.paid_amount
-		frm.refresh_field('sales_invoice_payment');
-	},
-	
-	paid_amount(frm,cdt, cdn) {
-		let doc=   locals[cdt][cdn];
-		doc.balance = doc.grand_total - doc.paid_amount
-		frm.refresh_field('sales_invoice_payment');
-	}
-});
 
 function add_product_to_sale_product(frm, p) {
 	let all_rows = frm.fields_dict["items"].grid.grid_rows.filter(function (d) { return d.doc.item == undefined });

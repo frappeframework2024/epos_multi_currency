@@ -9,7 +9,6 @@
  "engine": "InnoDB",
  "field_order": [
   "stock_location",
-  "item",
   "cost",
   "quantity",
   "stock_uom",
@@ -26,18 +25,11 @@
    "options": "Stock Location"
   },
   {
-   "fieldname": "item",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "in_list_view": 1,
-   "label": "Item",
-   "options": "Item"
-  },
-  {
    "fieldname": "quantity",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Quantity"
+   "label": "Quantity",
+   "read_only": 1
   },
   {
    "default": "0",
@@ -65,19 +57,21 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Stock UOM",
-   "options": "UOM"
+   "options": "UOM",
+   "read_only": 1
   },
   {
    "default": "0",
    "fieldname": "cost",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Cost"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-08 11:33:49.187078",
+ "modified": "2023-09-13 13:54:33.507567",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Stock Location Item",
