@@ -1,0 +1,141 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2023-09-14 10:33:53.541725",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_gjmj",
+  "naming_series",
+  "payment_date",
+  "reference",
+  "column_break_mvdb",
+  "expense",
+  "expense_by",
+  "employee_name",
+  "section_break_gxpm",
+  "payments",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_gjmj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "REC-.YYYY.-.####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "REC-.YYYY.-.####"
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Payment Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "label": "Reference"
+  },
+  {
+   "fieldname": "column_break_mvdb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "expense",
+   "fieldtype": "Link",
+   "label": "Expense",
+   "options": "Expense",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "sale_invoice.customer",
+   "fieldname": "expense_by",
+   "fieldtype": "Link",
+   "label": "Expense By",
+   "options": "Employee",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "expense_by.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_gxpm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "payments",
+   "fieldtype": "Table",
+   "label": "Payment",
+   "options": "Expense Payment Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Expense Payment",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-09-14 10:35:53.631472",
+ "modified_by": "Administrator",
+ "module": "ePos Multi Currency",
+ "name": "Expense Payment",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Sales User",
+   "select": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

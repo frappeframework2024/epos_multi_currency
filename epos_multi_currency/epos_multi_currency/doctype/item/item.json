@@ -32,7 +32,8 @@
   "tab_2_tab",
   "item_uom",
   "section_break_pye8",
-  "stock_location_item"
+  "stock_location_item",
+  "amended_from"
  ],
  "fields": [
   {
@@ -72,6 +73,7 @@
    "default": "1",
    "fieldname": "allow_discount",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Allow Discount"
   },
   {
@@ -122,6 +124,7 @@
   {
    "fieldname": "price",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Price",
    "reqd": 1
   },
@@ -175,6 +178,7 @@
    "fieldname": "stock_location_item",
    "fieldtype": "Table",
    "label": "Stock Location Item",
+   "no_copy": 1,
    "options": "Stock Location Item"
   },
   {
@@ -188,10 +192,20 @@
    "fieldtype": "Attach Image",
    "hidden": 1,
    "label": "Photo"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Item",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "image_field": "photo",
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [
   {
    "group": "Sale",
@@ -206,7 +220,7 @@
    "link_fieldname": "item"
   }
  ],
- "modified": "2023-09-13 14:58:05.897908",
+ "modified": "2023-09-14 17:50:30.437690",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Item",

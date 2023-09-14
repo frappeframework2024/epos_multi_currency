@@ -35,7 +35,6 @@ frappe.ui.form.on("Sales Invoice", {
 				args: { "sales_invoice": frm.doc.name },
 				callback: function (r) {
 					r.message.forEach(element => {
-						console.log(element)
 						frm.dashboard.add_indicator(__('{1} : {0}', [format_currency(element.grand_total,element.currency),element.currency,element.symbol]), 'green')
 						
 					});
@@ -92,8 +91,7 @@ frappe.ui.form.on("Sales Invoice", {
 	discount_percent(frm){
 		frm.doc.sales_invoice_payment.forEach(function(p){
 			p.discount_amount = p.total_amount * frm.doc.discount_percent/100
-			p.grand_total = p.total_amount -  (p.discount_amount + p.write_off_amount)
-			p.balance = p.grand_total - p.paid_amount
+			check_payment_discount(p)
 		});
 		frm.refresh_field('sales_invoice_payment'); 
 	},
@@ -184,18 +182,8 @@ frappe.ui.form.on('Sales Invoice Item', {
 		update_item(doc,frm);
 	},
 	discount(frm,cdt, cdn) {
-	let doc=   locals[cdt][cdn];
-	if (doc.discount_type == "Percent")
-    {
-		doc.discount_amount = (doc.sub_total * doc.discount/100); 
-	}
-    else
-    {
-		doc.discount_amount = doc.discount;
-	}
-    doc.grand_total = (doc.sub_total || 0) - (doc.discount_amount || 0);
-	update_item(doc,frm)
-	frm.refresh_field('items');
+		let doc=   locals[cdt][cdn];
+		update_item(doc,frm)
 	},
 	discount_type(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
@@ -256,7 +244,6 @@ frappe.ui.form.on('Sales Invoice Item', {
     },
   });
 frappe.ui.form.on('Sales Invoice Payment', {
-	
 	currency(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
 		frappe.call({
@@ -277,8 +264,7 @@ frappe.ui.form.on('Sales Invoice Payment', {
     },
 	discount_amount(frm,cdt, cdn) {
         let doc=   locals[cdt][cdn];
-		doc.grand_total = doc.total_amount - (doc.discount_amount + doc.write_off_amount)
-		doc.balance = doc.grand_total - doc.paid_amount
+		check_payment_discount(doc)
 		frm.refresh_field('sales_invoice_payment');
 	},
 	write_off_amount(frm,cdt, cdn) {
@@ -348,14 +334,35 @@ function add_product_to_sale_product(frm,p){
 
 function update_item(doc,frm){
 	doc.sub_total = doc.quantity * doc.price;
-	if (doc.discount_type == "Percent")
-	{
-		doc.discount_amount = (doc.sub_total * doc.discount/100); 
+	if(doc.allow_discount == 1){
+		if (doc.discount_type == "Percent")
+		{
+			doc.discount_amount = (doc.sub_total * doc.discount/100); 
+		}
+		else
+		{
+			doc.discount_amount = doc.discount;
+		}
 	}
-	else
-	{
-		doc.discount_amount = doc.discount;
+	else{
+		frappe.show_alert({message:"Item not allow to discount", indicator:"orange"});
+		doc.discount = 0
 	}
 	doc.grand_total = doc.sub_total - (doc.discount_amount || 0);
 	frm.refresh_field('items');
+}
+
+function check_payment_discount(doc){
+	if(doc.discountable_amount == 0 && doc.discount_amount > 0){
+		frappe.show_alert({message:"Payment "+ doc.currency +" can't be discount", indicator:"orange"});
+		doc.discount_amount = 0
+	}
+	else if(doc.discountable_amount<doc.discount_amount){
+		doc.discount_amount = doc.discountable_amount
+	}
+	else{
+		
+	}
+	doc.grand_total = doc.discountable_amount - (doc.discount_amount + doc.write_off_amount)
+	doc.balance = doc.grand_total - doc.paid_amount
 }

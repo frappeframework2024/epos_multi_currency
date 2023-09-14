@@ -123,7 +123,8 @@
   {
    "fieldname": "discount_percent",
    "fieldtype": "Float",
-   "label": "Discount Percent"
+   "label": "Discount Percent",
+   "no_copy": 1
   },
   {
    "fieldname": "amended_from",
@@ -219,7 +220,7 @@
    "link_fieldname": "sale_invoice"
   }
  ],
- "modified": "2023-09-13 17:10:45.850919",
+ "modified": "2023-09-14 15:49:39.555149",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice",

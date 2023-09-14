@@ -115,6 +115,7 @@ class SalesInvoice(Document):
 			c = frappe.get_doc("Sales Invoice Payment",a.name)
 			c.grand_total = c.total_amount - (c.discount_amount + c.write_off_amount)
 			c.balance = c.grand_total - c.paid_amount
+			c.discountable_amount = get_discountable_amount(self,a.currency)
 			c.save()
 
 		for b in self.sales_invoice_payment:
@@ -150,7 +151,7 @@ def update_stock(self,item,is_return):
 			'item_code': item.item,
 			'unit':item.uom,
 			'stock_location':item.stock_location,
-			'in_quantity':item.quantity * item.uom_conversion,
+			'in_quantity':item.quantity * item.uom_conversion * -1,
 			"uom_conversion":item.uom_conversion,
 			"cost":item.cost,
 			"Note":"Cancel Sales Invoice",
@@ -257,3 +258,10 @@ def get_default_stock_location():
 	p = frappe.get_doc("Stock Location",{"is_default":1},["*"])
 	if p:
 		return {"stock_location_name": p.stock_location_name}
+
+def get_discountable_amount(self,currency):
+	discountable_amount = 0
+	for v in self.items:
+		if v.allow_discount == 1 and v.currency == currency:
+			discountable_amount = discountable_amount + v.grand_total
+	return discountable_amount

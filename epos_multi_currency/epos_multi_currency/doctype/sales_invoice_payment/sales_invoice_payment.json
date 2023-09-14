@@ -8,6 +8,7 @@
  "field_order": [
   "currency",
   "total_amount",
+  "discountable_amount",
   "discount_amount",
   "write_off_amount",
   "grand_total",
@@ -78,12 +79,19 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Symbol"
+  },
+  {
+   "fieldname": "discountable_amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Discountable Amount",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-13 16:07:31.134063",
+ "modified": "2023-09-14 15:24:39.116573",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice Payment",

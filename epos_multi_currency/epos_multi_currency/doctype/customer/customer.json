@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:customer_code",
+ "autoname": "naming_series:",
  "creation": "2023-09-05 13:06:10.002521",
  "default_view": "List",
  "doctype": "DocType",
@@ -9,9 +9,9 @@
  "engine": "InnoDB",
  "field_order": [
   "customer_infomation_section",
-  "customer_code",
-  "customer_name",
+  "naming_series",
   "customer_group",
+  "customer_name",
   "column_break_ixcd",
   "phone__1",
   "phone__2",
@@ -21,14 +21,6 @@
   "description"
  ],
  "fields": [
-  {
-   "fieldname": "customer_code",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Customer Code",
-   "reqd": 1,
-   "unique": 1
-  },
   {
    "fieldname": "customer_name",
    "fieldtype": "Data",
@@ -51,8 +43,7 @@
    "fieldname": "phone__1",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Phone  1",
-   "reqd": 1
+   "label": "Phone  1"
   },
   {
    "fieldname": "phone__2",
@@ -86,15 +77,21 @@
    "fieldname": "description",
    "fieldtype": "Text",
    "label": "Description"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "CU.####"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-05 15:00:46.340007",
+ "modified": "2023-09-11 09:24:22.345343",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Customer",
- "naming_rule": "By fieldname",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {

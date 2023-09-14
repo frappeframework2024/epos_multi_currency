@@ -1,0 +1,92 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2023-09-14 09:07:35.829036",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "expense_code",
+  "expense_name",
+  "expense_category",
+  "currency",
+  "quantity",
+  "price",
+  "amount",
+  "note"
+ ],
+ "fields": [
+  {
+   "fieldname": "expense_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Expense Code",
+   "options": "Expense Code",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "expense_code.expense_name",
+   "fieldname": "expense_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Expense Name"
+  },
+  {
+   "fetch_from": "expense_code.expense_category",
+   "fieldname": "expense_category",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Expense Category"
+  },
+  {
+   "fetch_from": "expense_code.default_currency",
+   "fetch_if_empty": 1,
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity"
+  },
+  {
+   "default": "0",
+   "fieldname": "price",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Price"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-09-14 11:37:11.957617",
+ "modified_by": "Administrator",
+ "module": "ePos Multi Currency",
+ "name": "Expense Item",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

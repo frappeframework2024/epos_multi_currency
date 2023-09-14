@@ -1,0 +1,146 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2023-09-14 11:47:03.083949",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_code",
+  "item_name",
+  "uom",
+  "stock_uom",
+  "column_break_tgkz",
+  "stock_location",
+  "current_quantity",
+  "new_quantity",
+  "cost",
+  "whole_sale",
+  "price",
+  "currency",
+  "uom_conversion"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item.item_code",
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fetch_from": "item.item_name_en",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fetch_from": "item.uom",
+   "fetch_if_empty": 1,
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "UOM",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fetch_from": "item.uom",
+   "fieldname": "stock_uom",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Stock UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "column_break_tgkz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cost",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Cost"
+  },
+  {
+   "columns": 1,
+   "fetch_from": "item.currency",
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "uom_conversion",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "UOM Conversion"
+  },
+  {
+   "fieldname": "stock_location",
+   "fieldtype": "Link",
+   "label": "Stock Location",
+   "options": "Stock Location",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "default": "1",
+   "fieldname": "current_quantity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Current Quantity",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "new_quantity",
+   "fieldtype": "Float",
+   "label": "New Quantity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "whole_sale",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Whole Sale"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Price"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-09-14 14:34:44.856122",
+ "modified_by": "Administrator",
+ "module": "Stock",
+ "name": "Stock Adjustment Item",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
