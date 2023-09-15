@@ -1,0 +1,205 @@
+[
+ {
+  "charts": [
+   {
+    "chart_name": "Sales Invoice",
+    "label": "Daily Sale",
+    "parent": "ePos Retail",
+    "parentfield": "charts",
+    "parenttype": "Workspace"
+   }
+  ],
+  "content": "[{\"id\":\"pEeEDMYBtn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">ePos Retail</span>\",\"col\":12}},{\"id\":\"YDnWyNevD_\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Selling Workspace\",\"col\":12}},{\"id\":\"TqU-U0wZ73\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Daily Sale\",\"col\":9}},{\"id\":\"LiLiaSqHPZ\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Current Receivable\",\"col\":3}},{\"id\":\"KoEt_BWEfw\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":3}},{\"id\":\"6rFwI6y6vn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Payment\",\"col\":3}},{\"id\":\"5VrfSNW48v\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"id\":\"qx-XI1g8Xz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Group\",\"col\":3}},{\"id\":\"aY_i-aAbZd\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"id\":\"9S77PF6uTV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Category\",\"col\":3}},{\"id\":\"SbWaqccBjg\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"UOM\",\"col\":3}},{\"id\":\"7XW-MhsAV-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Location\",\"col\":3}},{\"id\":\"oWsVG2B5lU\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"CllZjgKXYg\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\">Recent Sale Invoice</span>\",\"col\":12}},{\"id\":\"XbKp5QQQau\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Recent Sales Invoice\",\"col\":12}}]",
+  "custom_blocks": [
+   {
+    "custom_block_name": "Recent Sales Invoice",
+    "label": "Recent Sales Invoice",
+    "parent": "ePos Retail",
+    "parentfield": "custom_blocks",
+    "parenttype": "Workspace"
+   },
+   {
+    "custom_block_name": "Current Receivable",
+    "label": "Current Receivable",
+    "parent": "ePos Retail",
+    "parentfield": "custom_blocks",
+    "parenttype": "Workspace"
+   },
+   {
+    "custom_block_name": "Selling Workspace",
+    "label": "Selling Workspace",
+    "parent": "ePos Retail",
+    "parentfield": "custom_blocks",
+    "parenttype": "Workspace"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Workspace",
+  "for_user": "",
+  "hide_custom": 0,
+  "icon": "tag",
+  "is_hidden": 0,
+  "label": "ePos Retail",
+  "links": [],
+  "modified": "2023-09-14 16:50:09.101646",
+  "module": "ePos Multi Currency",
+  "name": "ePos Retail",
+  "number_cards": [],
+  "parent_page": "",
+  "public": 1,
+  "quick_lists": [],
+  "restrict_to_domain": null,
+  "roles": [
+   {
+    "parent": "ePos Retail",
+    "parentfield": "roles",
+    "parenttype": "Workspace",
+    "role": "Sales Master Manager"
+   },
+   {
+    "parent": "ePos Retail",
+    "parentfield": "roles",
+    "parenttype": "Workspace",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "ePos Retail",
+    "parentfield": "roles",
+    "parenttype": "Workspace",
+    "role": "Sales User"
+   }
+  ],
+  "sequence_id": 1.0,
+  "shortcuts": [
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Item Group",
+    "link_to": "Item Group",
+    "parent": "ePos Retail",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Customer",
+    "link_to": "Customer",
+    "parent": "ePos Retail",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Green",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Item",
+    "link_to": "Item",
+    "parent": "ePos Retail",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "New",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "New Payment",
+    "link_to": "Sale Payment",
+    "parent": "ePos Retail",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Sales Invoice",
+    "link_to": "Sales Invoice",
+    "parent": "ePos Retail",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"sale_date\":[\"Timespan\",\"today\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Item Category",
+    "link_to": "Item Category",
+    "parent": "ePos Retail",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "UOM",
+    "link_to": "UOM",
+    "parent": "ePos Retail",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Stock Location",
+    "link_to": "Stock Location",
+    "parent": "ePos Retail",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   }
+  ],
+  "title": "ePos Retail"
+ }
+]

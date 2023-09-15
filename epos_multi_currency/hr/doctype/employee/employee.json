@@ -1,0 +1,328 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:employee_code",
+ "creation": "2023-09-13 14:11:06.516120",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee_code",
+  "employee_name",
+  "date_of_birth",
+  "column_break_4",
+  "gender",
+  "disabled",
+  "contact_information_section",
+  "phone_number_1",
+  "phone_number_2",
+  "column_break_10",
+  "email_address",
+  "address_note",
+  "address",
+  "column_break_12",
+  "note",
+  "photo",
+  "login_information_tab",
+  "allow_login",
+  "column_break_jbjg",
+  "user_id",
+  "pos_pin_code",
+  "section_break_hsfl",
+  "username",
+  "password",
+  "column_break_mrdf",
+  "role_profile",
+  "module_profile",
+  "working_information_tab",
+  "department",
+  "report_to",
+  "column_break_21",
+  "join_date",
+  "basic_salary",
+  "employee_type",
+  "device_id",
+  "emergency_contact_tab",
+  "emergency_contacts",
+  "exit_information_tab",
+  "is_exit",
+  "exit_type",
+  "exit_date",
+  "column_break_30",
+  "exit_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employee Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "label": "Date Of Birth"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Not Set",
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Gender",
+   "options": "Not Set\nMale\nFemale"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "contact_information_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Information"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "phone_number_1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Phone Number 1"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "phone_number_2",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Phone Number 2"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "email_address",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email Address"
+  },
+  {
+   "fieldname": "address_note",
+   "fieldtype": "Section Break",
+   "label": "Address & Note"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "column_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Note"
+  },
+  {
+   "fieldname": "photo",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Photo"
+  },
+  {
+   "fieldname": "login_information_tab",
+   "fieldtype": "Tab Break",
+   "label": "Login Information"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_login",
+   "fieldtype": "Check",
+   "label": "Allow Login"
+  },
+  {
+   "fieldname": "column_break_jbjg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "user_id",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "User ID",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "pos_pin_code",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "POS Pin Code",
+   "no_copy": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "section_break_hsfl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Space is not allow",
+   "fieldname": "username",
+   "fieldtype": "Data",
+   "label": "Username",
+   "mandatory_depends_on": "eval:doc.allow_login==1",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "password",
+   "fieldtype": "Data",
+   "label": "Password",
+   "no_copy": 1
+  },
+  {
+   "fieldname": "column_break_mrdf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "role_profile",
+   "fieldtype": "Link",
+   "label": "Role Profile",
+   "mandatory_depends_on": "eval:doc.allow_login==1",
+   "options": "Role Profile"
+  },
+  {
+   "fieldname": "module_profile",
+   "fieldtype": "Link",
+   "label": "Module Profile",
+   "mandatory_depends_on": "eval:doc.allow_login==1",
+   "options": "Module Profile"
+  },
+  {
+   "fieldname": "working_information_tab",
+   "fieldtype": "Tab Break",
+   "label": "Working Information"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "report_to",
+   "fieldtype": "Link",
+   "label": "Report to",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "join_date",
+   "fieldtype": "Date",
+   "label": "Join Date"
+  },
+  {
+   "fieldname": "basic_salary",
+   "fieldtype": "Currency",
+   "label": "Basic Salary"
+  },
+  {
+   "default": "Full Time",
+   "fieldname": "employee_type",
+   "fieldtype": "Link",
+   "label": "Employee Type",
+   "options": "Employee Type"
+  },
+  {
+   "fieldname": "device_id",
+   "fieldtype": "Data",
+   "label": "Device ID"
+  },
+  {
+   "fieldname": "emergency_contact_tab",
+   "fieldtype": "Tab Break",
+   "label": "Emergency Contact"
+  },
+  {
+   "fieldname": "emergency_contacts",
+   "fieldtype": "Table",
+   "label": "Emergency Contacts",
+   "options": "Employee Emergency Contact"
+  },
+  {
+   "fieldname": "exit_information_tab",
+   "fieldtype": "Tab Break",
+   "label": "Exit Information"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_exit",
+   "fieldtype": "Check",
+   "label": "Is Exit"
+  },
+  {
+   "fieldname": "exit_type",
+   "fieldtype": "Link",
+   "label": "Exit Type",
+   "options": "Employee Exit Type"
+  },
+  {
+   "fieldname": "exit_date",
+   "fieldtype": "Date",
+   "label": "Exit Date"
+  },
+  {
+   "fieldname": "column_break_30",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "exit_note",
+   "fieldtype": "Small Text",
+   "label": "Exit Note"
+  }
+ ],
+ "image_field": "photo",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-09-14 09:40:45.160109",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Employee",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "search_fields": "employee_name",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

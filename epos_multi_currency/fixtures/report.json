@@ -1,0 +1,127 @@
+[
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2023-09-15 12:17:18.274641",
+  "module": "Reports",
+  "name": "Daily Sale Report",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "Daily Sale Report",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Daily Sale Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Daily Sale Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Daily Sale Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Master Manager"
+   }
+  ]
+ },
+ {
+  "add_total_row": 0,
+  "columns": [
+   {
+    "fieldname": "sale_date",
+    "fieldtype": "Date",
+    "label": "Date",
+    "options": null,
+    "parent": "Sales Invoice",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   },
+   {
+    "fieldname": "usd",
+    "fieldtype": "Float",
+    "label": "USD",
+    "options": null,
+    "parent": "Sales Invoice",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   },
+   {
+    "fieldname": "khr",
+    "fieldtype": "Int",
+    "label": "KHR",
+    "options": null,
+    "parent": "Sales Invoice",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   },
+   {
+    "fieldname": "baht",
+    "fieldtype": "Float",
+    "label": "BAHT",
+    "options": null,
+    "parent": "Sales Invoice",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   }
+  ],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2023-09-15 12:16:46.607507",
+  "module": "Reports",
+  "name": "Sales Invoice",
+  "prepared_report": 0,
+  "query": "select\r\nb.sale_date,\r\nsum(if(a.currency = 'USD',a.grand_total,0)) usd,\r\nsum(if(a.currency = 'KHR',a.grand_total,0)) khr,\r\nsum(if(a.currency = 'BAHT',a.grand_total,0)) baht\r\nfrom `tabSales Invoice Item` a\r\ninner join `tabSales Invoice` b on b.name = a.parent\r\ngroup by b.sale_date\r\nlimit 10",
+  "ref_doctype": "Sales Invoice",
+  "reference_report": null,
+  "report_name": "Sales Invoice",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Sales Invoice",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   },
+   {
+    "parent": "Sales Invoice",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Sales Invoice",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Master Manager"
+   }
+  ]
+ }
+]
