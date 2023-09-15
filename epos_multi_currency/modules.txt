@@ -1,3 +1,5 @@
 ePos Multi Currency
 Stock
 Config
+HR
+Reports
