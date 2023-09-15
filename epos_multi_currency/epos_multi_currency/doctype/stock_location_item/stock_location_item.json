@@ -25,6 +25,7 @@
    "options": "Stock Location"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "quantity",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -61,6 +62,7 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "default": "0",
    "fieldname": "cost",
    "fieldtype": "Float",
@@ -71,7 +73,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-13 13:54:33.507567",
+ "modified": "2023-09-15 15:05:44.515917",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Stock Location Item",

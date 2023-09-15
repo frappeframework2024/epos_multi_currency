@@ -205,22 +205,35 @@
  ],
  "image_field": "photo",
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [
   {
    "group": "Sale",
    "link_doctype": "Sales Invoice",
    "link_fieldname": "item",
-   "parent_doctype": "Sales Invoice",
-   "table_fieldname": "items"
+   "parent_doctype": "Sales Invoice"
   },
   {
    "group": "Inventory",
    "link_doctype": "Stock In",
    "link_fieldname": "item"
+  },
+  {
+   "group": "Inventory",
+   "link_doctype": "Stock Adjustment",
+   "link_fieldname": "item"
+  },
+  {
+   "group": "Inventory",
+   "link_doctype": "Stock Take",
+   "link_fieldname": "item"
+  },
+  {
+   "group": "Inventory",
+   "link_doctype": "Stock Transfer",
+   "link_fieldname": "item"
   }
  ],
- "modified": "2023-09-14 17:50:30.437690",
+ "modified": "2023-09-15 14:24:17.393888",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Item",

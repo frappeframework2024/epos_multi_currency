@@ -34,7 +34,8 @@
   "customer_phone_1",
   "customer_phone_2",
   "khmer_day",
-  "status"
+  "status",
+  "branch"
  ],
  "fields": [
   {
@@ -209,6 +210,14 @@
    "fieldtype": "Link",
    "label": "Employee",
    "options": "Employee"
+  },
+  {
+   "fetch_from": "stock_location.branch",
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Branch",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -220,7 +229,7 @@
    "link_fieldname": "sale_invoice"
   }
  ],
- "modified": "2023-09-14 15:49:39.555149",
+ "modified": "2023-09-15 10:09:07.488680",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice",

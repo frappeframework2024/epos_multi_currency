@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestInventoryTransaction(FrappeTestCase):
+class TestKhmerDay(FrappeTestCase):
 	pass
