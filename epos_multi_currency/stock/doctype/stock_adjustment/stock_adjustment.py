@@ -7,35 +7,10 @@ from frappe.model.document import Document
 
 class StockAdjustment(Document):
 	def on_submit(self):
-		for item in self.items:
-			if item.new_quantity - item.current_quantity < 0:
-				add_to_inventory_transaction({
-					'doctype': 'Inventory Transaction',
-					'transaction_type':"Stock Adjustment",
-					'transaction_date':self.stock_adjustment_date,
-					'transaction_number':self.name,
-					'item_code': item.item,
-					'unit':item.uom,
-					'stock_location':item.stock_location,
-					'out_quantity': (item.current_quantity - item.new_quantity) * item.uom_conversion,
-					"uom_conversion":item.uom_conversion,
-					"cost":item.cost,
-					'action': 'Submit'
-				})
-			else:
-				add_to_inventory_transaction({
-					'doctype': 'Inventory Transaction',
-					'transaction_type':"Stock Adjustment",
-					'transaction_date':self.stock_adjustment_date,
-					'transaction_number':self.name,
-					'item_code': item.item,
-					'unit':item.uom,
-					'stock_location':item.stock_location,
-					'in_quantity':(item.new_quantity - item.current_quantity) * item.uom_conversion,
-					"uom_conversion":item.uom_conversion,
-					"cost":item.cost,
-					'action': 'Submit'
-				})
+		if len(self.items) >= 20:
+			frappe.enqueue('epos_multi_currency.stock.doctype.stock_adjustment.stock_adjustment.update_inventory_on_submit',self=self)
+		else:
+			update_inventory_on_submit(self)
 
 @frappe.whitelist()
 def get_product(stock_location,barcode):
@@ -80,3 +55,34 @@ def get_available_stock(stock_location,item_code):
 		return {
 			"quantity": 0
 		}
+	
+def update_inventory_on_submit(self):
+	for item in self.items:
+			if item.new_quantity - item.current_quantity < 0:
+				add_to_inventory_transaction({
+					'doctype': 'Inventory Transaction',
+					'transaction_type':"Stock Adjustment",
+					'transaction_date':self.stock_adjustment_date,
+					'transaction_number':self.name,
+					'item_code': item.item,
+					'unit':item.uom,
+					'stock_location':item.stock_location,
+					'out_quantity': (item.current_quantity - item.new_quantity) * item.uom_conversion,
+					"uom_conversion":item.uom_conversion,
+					"cost":item.cost,
+					'action': 'Submit'
+				})
+			else:
+				add_to_inventory_transaction({
+					'doctype': 'Inventory Transaction',
+					'transaction_type':"Stock Adjustment",
+					'transaction_date':self.stock_adjustment_date,
+					'transaction_number':self.name,
+					'item_code': item.item,
+					'unit':item.uom,
+					'stock_location':item.stock_location,
+					'in_quantity':(item.new_quantity - item.current_quantity) * item.uom_conversion,
+					"uom_conversion":item.uom_conversion,
+					"cost":item.cost,
+					'action': 'Submit'
+				})

@@ -9,14 +9,14 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
+  "stock_location",
   "reference",
   "column_break_qqkl",
-  "stock_location",
   "stock_adjustment_date",
+  "amended_from",
   "section_break_ebsl",
   "search_items",
-  "items",
-  "amended_from"
+  "items"
  ],
  "fields": [
   {
@@ -76,14 +76,8 @@
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [
-  {
-   "group": "Payment",
-   "link_doctype": "Stock Payment",
-   "link_fieldname": "stock_in"
-  }
- ],
- "modified": "2023-09-14 11:50:53.096923",
+ "links": [],
+ "modified": "2023-09-15 09:14:28.347843",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Adjustment",

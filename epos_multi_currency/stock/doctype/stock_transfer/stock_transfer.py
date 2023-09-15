@@ -20,14 +20,24 @@ class StockTransfer(Document):
 	def on_submit(self):
 		self.update_stock()
 
+	def on_cancel(self):
+		if len(self.items) >= 20:
+			frappe.enqueue('epos_multi_currency.stock.doctype.stock_transfer.stock_transfer.update_inventory_from_source',self=self,is_cancel=1)
+			frappe.enqueue('epos_multi_currency.stock.doctype.stock_transfer.stock_transfer.update_inventory_to_target',self=self,is_cancel=1)
+		else:
+			update_inventory_from_source(self,is_cancel=1)
+			update_inventory_to_target(self,is_cancel=1)
+
 	def update_stock(self):
-		update_inventory_from_source(self)
-		update_inventory_to_target(self)
-		# frappe.enqueue('epos_multi_currency.stock.doctype.stock_transfer.stock_transfer.update_inventory_from_source',self=self)
-		# frappe.enqueue('epos_multi_currency.stock.doctype.stock_transfer.stock_transfer.update_inventory_to_target',self=self)
+		if len(self.items) >= 20:
+			frappe.enqueue('epos_multi_currency.stock.doctype.stock_transfer.stock_transfer.update_inventory_from_source',self=self,is_cancel=0)
+			frappe.enqueue('epos_multi_currency.stock.doctype.stock_transfer.stock_transfer.update_inventory_to_target',self=self,is_cancel=0)
+		else:
+			update_inventory_from_source(self,is_cancel=0)
+			update_inventory_to_target(self,is_cancel=0)
 
 
-def update_inventory_from_source(self):
+def update_inventory_from_source(self,is_cancel):
 	for p in self.items:
 		if p.is_inventory_product:
 			uom_conversion = get_uom_conversion(p.uom, p.stock_uom)
@@ -41,14 +51,15 @@ def update_inventory_from_source(self):
 				'stock_unit':p.stock_uom,
 				'is_inventory':p.is_inventory_product,
 				'stock_location':self.source_stock_location,
-				'out_quantity':p.quantity * uom_conversion,
+				'out_quantity': 0 if is_cancel ==1 else p.quantity * uom_conversion,
+				'in_quantity': p.quantity * uom_conversion if is_cancel == 1 else 0,
 				"uom_conversion":uom_conversion,
 				"cost":p.cost,
 				'note': "New Stock In submitted to {} ".format(self.target_stock_location),
 				'action': 'Submit'
 			})
 
-def update_inventory_to_target(self):
+def update_inventory_to_target(self,is_cancel):
 	for p in self.items:
 		if p.is_inventory_product:
 			uom_conversion = get_uom_conversion(p.uom, p.stock_uom)
@@ -62,7 +73,8 @@ def update_inventory_to_target(self):
 				'stock_unit':p.stock_uom,
 				'is_inventory':p.is_inventory_product,
 				'stock_location':self.target_stock_location,
-				'in_quantity':p.quantity * uom_conversion,
+				'in_quantity': 0 if is_cancel == 1 else p.quantity * uom_conversion,
+				'out_quantity':p.quantity * uom_conversion if is_cancel == 1 else 0,
 				"uom_conversion":uom_conversion,
 				"cost":p.cost,
 				'note': "New Stock In submitted from {} ".format(self.source_stock_location),

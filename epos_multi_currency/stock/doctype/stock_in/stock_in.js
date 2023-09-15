@@ -2,17 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Stock In", {
-	setup: function (frm) {
-		frm.set_query("uom", "items", function (doc, cdt, cdn) {
-			let item = locals[cdt][cdn];
-			const uoms = item.uom_list.split(",")
-			return {
-				filters: [
-					['UOM', 'unit_name', 'in', uoms]
-				]
-			};
-		});
-	},
 	refresh:function(frm) {
 		frm.add_custom_button(__('Reload'), function() {
 			frm.reload_doc()

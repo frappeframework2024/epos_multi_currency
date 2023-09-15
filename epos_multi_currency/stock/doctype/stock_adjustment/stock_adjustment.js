@@ -46,33 +46,38 @@ frappe.ui.form.on("Stock Adjustment", {
 						stock_location:frm.doc.stock_location
 					},
 					callback: function(r){
-			if(r.message != undefined)
-            {
-				if(r.message.status ==0)
-              	{ 
-					let row_exist = check_row_exist(frm,barcode,r.message.uom);
-					if(row_exist!=undefined)
-                	{
-						row_exist.doc.quantity = row_exist.doc.quantity + 1;
-						row_exist.doc.quantity = frm.doc.is_return === 1 ? row_exist.doc.quantity * -1 : row_exist.doc.quantity;
-						frm.refresh_field('items');
-					}
-					else 
+					if(r.message != undefined)
 					{
-						add_product_to_sale_product(frm,r.message);
-						frm.refresh_field('items');
+						if(r.message.status ==0)
+						{ 
+							let row_exist = check_row_exist(frm,barcode,r.message.uom);
+							if(row_exist!=undefined)
+							{
+								row_exist.doc.quantity = row_exist.doc.quantity + 1;
+								row_exist.doc.quantity = frm.doc.is_return === 1 ? row_exist.doc.quantity * -1 : row_exist.doc.quantity;
+								frm.refresh_field('items');
+							}
+							else 
+							{
+								add_product_to_sale_product(frm,r.message);
+								frm.refresh_field('items');
+							}
+						}
+					else {
+						frappe.show_alert({
+							message: __(r.message.message),
+							indicator: 'orange'
+						}, 5);
 					}
-				}
-              else {}
-			}
-			else {
-				frappe.throw(_("Load data fail."))
-			}
-		},
-		error: function(r) {
-			frappe.throw(_("Load data fail."))
-		},
-	});			
+					}
+					else {
+						frappe.throw(_("Load data fail."))
+					}
+				},
+				error: function(r) {
+					frappe.throw(_("Load data fail."))
+				},
+			});			
 		}
 		frm.doc.search_items = "";
 		frm.refresh_field('search_items');  

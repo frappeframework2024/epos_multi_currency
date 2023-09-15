@@ -15,10 +15,10 @@
   "target_stock_location",
   "column_break_qqkl",
   "transfer_date",
+  "amended_from",
   "section_break_ebsl",
   "search_items",
-  "items",
-  "amended_from"
+  "items"
  ],
  "fields": [
   {
@@ -51,9 +51,10 @@
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Stock In",
+   "options": "Stock Transfer",
    "print_hide": 1,
    "read_only": 1
   },
@@ -76,9 +77,10 @@
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Stock In",
+   "options": "Stock Transfer",
    "print_hide": 1,
    "read_only": 1
   },
@@ -100,7 +102,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-13 13:52:04.653460",
+ "modified": "2023-09-15 09:03:12.242383",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Transfer",

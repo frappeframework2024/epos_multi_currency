@@ -2,17 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Stock Transfer", {
-    setup: function (frm) {
-		frm.set_query("uom", "items", function (doc, cdt, cdn) {
-			let item = locals[cdt][cdn];
-			const uoms = item.uom_list.split(",")
-			return {
-				filters: [
-					['UOM', 'unit_name', 'in', uoms]
-				]
-			};
-		});
-	},
 	onload(frm) {
         if (frm.is_new()){
             if (frm.is_new()) {

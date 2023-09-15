@@ -9,16 +9,16 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
-  "stock_location",
   "reference",
+  "stock_location",
   "column_break_qqkl",
-  "document_number_code",
   "stock_in_date",
   "amended_from",
+  "status",
   "supplier_section",
   "supplier",
-  "supplier_name",
   "column_break_kvbg",
+  "supplier_name",
   "supplier_phone",
   "section_break_ebsl",
   "search_items",
@@ -49,11 +49,6 @@
    "fieldname": "reference",
    "fieldtype": "Data",
    "label": "Reference"
-  },
-  {
-   "fieldname": "document_number_code",
-   "fieldtype": "Data",
-   "label": "Document Number Code"
   },
   {
    "fieldname": "stock_in_date",
@@ -98,6 +93,7 @@
    "fetch_if_empty": 1,
    "fieldname": "supplier_phone",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Supplier Phone"
   },
   {
@@ -129,8 +125,18 @@
   },
   {
    "fieldname": "discount_percent",
-   "fieldtype": "Data",
+   "fieldtype": "Float",
    "label": "Discount Percent"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "\nDraft\nReturn\nSubmitted\nPaid\nPartly Paid\nUnpaid\nCancelled",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
@@ -142,7 +148,7 @@
    "link_fieldname": "stock_in"
   }
  ],
- "modified": "2023-09-13 14:50:39.320039",
+ "modified": "2023-09-15 09:04:57.971635",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock In",
