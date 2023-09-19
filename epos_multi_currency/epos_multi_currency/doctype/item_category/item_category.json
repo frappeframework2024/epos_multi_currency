@@ -25,6 +25,7 @@
   {
    "fieldname": "code_prefix",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Code Prefix"
   },
   {
@@ -40,6 +41,7 @@
   {
    "fieldname": "code_digit",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Code Digit"
   },
   {
@@ -51,7 +53,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-05 11:46:19.740502",
+ "modified": "2023-09-16 12:02:22.042154",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Item Category",

@@ -12,11 +12,14 @@
   "stock_location",
   "reference",
   "column_break_qqkl",
+  "branch",
   "stock_take_date",
+  "employee",
   "amended_from",
   "section_break_ebsl",
   "search_items",
-  "items"
+  "items",
+  "employee_name"
  ],
  "fields": [
   {
@@ -81,12 +84,32 @@
    "options": "Stock Take",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-15 09:06:20.750405",
+ "modified": "2023-09-19 11:57:16.639841",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Take",

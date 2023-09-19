@@ -24,6 +24,9 @@
   "discount_type",
   "discount",
   "discount_amount",
+  "is_free",
+  "format",
+  "symbol",
   "stock_location_section",
   "stock_location",
   "column_break_loss",
@@ -132,7 +135,7 @@
    "fieldname": "discount_type",
    "fieldtype": "Select",
    "label": "Discount Type",
-   "options": "Amount\nPercent"
+   "options": "Percent\nAmount"
   },
   {
    "fieldname": "discount",
@@ -173,12 +176,34 @@
    "fieldtype": "Data",
    "label": "Item Code",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_free",
+   "fieldtype": "Check",
+   "label": "Is Free"
+  },
+  {
+   "fetch_from": "currency.number_format",
+   "fieldname": "format",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Format",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "currency.symbol",
+   "fieldname": "symbol",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Symbol",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-13 15:52:47.494096",
+ "modified": "2023-09-18 17:01:43.444627",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock In Item",

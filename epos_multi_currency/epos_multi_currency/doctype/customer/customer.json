@@ -13,8 +13,8 @@
   "customer_group",
   "customer_name",
   "column_break_ixcd",
-  "phone__1",
-  "phone__2",
+  "phone_1",
+  "phone_2",
   "address",
   "section_break_afqq",
   "description_column",
@@ -38,17 +38,6 @@
    "label": "Customer Group",
    "options": "Customer Group",
    "reqd": 1
-  },
-  {
-   "fieldname": "phone__1",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Phone  1"
-  },
-  {
-   "fieldname": "phone__2",
-   "fieldtype": "Data",
-   "label": "Phone  2"
   },
   {
    "fieldname": "address",
@@ -83,11 +72,22 @@
    "fieldtype": "Select",
    "label": "Series",
    "options": "CU.####"
+  },
+  {
+   "fieldname": "phone_1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Phone  1"
+  },
+  {
+   "fieldname": "phone_2",
+   "fieldtype": "Data",
+   "label": "Phone  2"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-11 09:24:22.345343",
+ "modified": "2023-09-18 08:37:59.915733",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Customer",
@@ -119,7 +119,7 @@
    "write": 1
   }
  ],
- "search_fields": "customer_name",
+ "search_fields": "customer_name,phone_1,phone_2",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

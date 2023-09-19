@@ -15,6 +15,11 @@
   "branch",
   "expense_by",
   "employee_name",
+  "section_break_zerk",
+  "company",
+  "address",
+  "column_break_igyg",
+  "phone",
   "section_break_uhfk",
   "expense_items",
   "section_break_vkog",
@@ -50,7 +55,8 @@
    "fieldname": "branch",
    "fieldtype": "Link",
    "label": "Branch",
-   "options": "Branch"
+   "options": "Branch",
+   "reqd": 1
   },
   {
    "fieldname": "expense_by",
@@ -91,7 +97,7 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Status",
-   "options": "\nDraft\nSubmitted\nPaid\nPartly Paid\nUnpaid\nCancelled"
+   "options": "\nDraft\nPaid\nPartly Paid\nUnpaid\nCancelled"
   },
   {
    "fieldname": "amended_from",
@@ -101,6 +107,29 @@
    "options": "Expense",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Data",
+   "label": "Company"
+  },
+  {
+   "fieldname": "section_break_zerk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_igyg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Data",
+   "label": "Address"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -112,7 +141,7 @@
    "link_fieldname": "expense"
   }
  ],
- "modified": "2023-09-14 11:11:54.409754",
+ "modified": "2023-09-19 10:40:43.183157",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Expense",

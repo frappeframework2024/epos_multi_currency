@@ -3,6 +3,13 @@
 
 frappe.ui.form.on("Sales Invoice", {
 	refresh:function(frm) {
+		frm.fields_dict['delivery'].get_query = function(doc) {
+			return {
+				filters: {
+					"position": 'Driver'
+				}
+			}
+		}
 		frm.add_custom_button(__('Reload'), function() {
 			frm.reload_doc()
 		});
@@ -24,6 +31,7 @@ frappe.ui.form.on("Sales Invoice", {
 						frm.set_value("stock_location", r.message.stock_location_name);
 					}
 				}
+				
 			}),
 			current =new Date();
 			frm.set_value("sale_date", current);
@@ -35,7 +43,8 @@ frappe.ui.form.on("Sales Invoice", {
 				args: { "sales_invoice": frm.doc.name },
 				callback: function (r) {
 					r.message.forEach(element => {
-						frm.dashboard.add_indicator(__('{1} : {0}', [format_currency(element.grand_total,element.currency),element.currency,element.symbol]), 'green')
+						console.log(fmt_money(element.grand_total,element.currency,element.format))
+						frm.dashboard.add_indicator(__('{1} : {0}', [fmt_money(element.grand_total,element.currency),element.currency]), 'green')
 						
 					});
 					
@@ -326,7 +335,7 @@ function add_product_to_sale_product(frm,p){
 		doc.currency = p.currency;
 		doc.stock_location = frm.doc.stock_location;
 		doc.uom_conversion = 1
-		doc.cost = p.cost
+		doc.cost = p.cost * doc.uom_conversion
 		doc.available_stock = p.available_stock
 		update_item(doc,frm);
 	}

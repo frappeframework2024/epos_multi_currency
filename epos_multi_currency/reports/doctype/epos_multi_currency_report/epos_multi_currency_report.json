@@ -1,0 +1,109 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:report",
+ "creation": "2023-09-16 14:18:42.699335",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "report",
+  "report_name",
+  "parent_doctype",
+  "class_name",
+  "lft",
+  "rgt",
+  "is_group",
+  "old_parent",
+  "parent_epos_multi_currency_report"
+ ],
+ "fields": [
+  {
+   "fieldname": "report",
+   "fieldtype": "Data",
+   "label": "Report",
+   "unique": 1
+  },
+  {
+   "fieldname": "report_name",
+   "fieldtype": "Data",
+   "label": "Report Name"
+  },
+  {
+   "fieldname": "parent_doctype",
+   "fieldtype": "Link",
+   "label": "Parent Doctype",
+   "options": "DocType"
+  },
+  {
+   "default": "report_list list-group-item",
+   "fieldname": "class_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Class Name"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "label": "Old Parent",
+   "options": "ePos Multi Currency Report"
+  },
+  {
+   "fieldname": "parent_epos_multi_currency_report",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Parent ePos Multi Currency Report",
+   "options": "ePos Multi Currency Report"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2023-09-18 11:53:57.863733",
+ "modified_by": "Administrator",
+ "module": "Reports",
+ "name": "ePos Multi Currency Report",
+ "naming_rule": "By fieldname",
+ "nsm_parent_field": "parent_epos_multi_currency_report",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

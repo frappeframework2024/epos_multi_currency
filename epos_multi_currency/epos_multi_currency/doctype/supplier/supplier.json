@@ -15,7 +15,7 @@
   "supplier_name",
   "mobile_phone",
   "address",
-  "ebavle"
+  "enable"
  ],
  "fields": [
   {
@@ -60,14 +60,14 @@
   },
   {
    "default": "1",
-   "fieldname": "ebavle",
+   "fieldname": "enable",
    "fieldtype": "Check",
    "label": "Enable"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-05 16:00:39.765885",
+ "modified": "2023-09-18 14:26:59.774856",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Supplier",

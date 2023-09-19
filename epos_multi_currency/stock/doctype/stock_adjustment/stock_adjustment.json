@@ -12,11 +12,14 @@
   "stock_location",
   "reference",
   "column_break_qqkl",
+  "branch",
   "stock_adjustment_date",
+  "employee",
   "amended_from",
   "section_break_ebsl",
   "search_items",
-  "items"
+  "items",
+  "employee_name"
  ],
  "fields": [
   {
@@ -72,12 +75,34 @@
    "options": "Stock Adjustment",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-15 09:14:28.347843",
+ "modified": "2023-09-19 11:51:35.671140",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Adjustment",

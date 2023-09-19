@@ -15,7 +15,7 @@ class Expense(Document):
 	def on_update(self):
 		item_currencies = Counter()
 		for v in self.expense_items:
-			item_currencies[v.currency] += v.amount
+			item_currencies[v.currency] += v.amount or 0
 		
 		payment_currency=[]
 		for a in self.total_amount:
@@ -32,7 +32,7 @@ class Expense(Document):
 							"currency":currency,
 							"total_amount":grand_total,
 							"paid_amount":b.paid_amount or 0,
-							"balance":b.balance or 0,
+							"balance":grand_total - b.paid_amount or 0,
 							"parent":self.name,
 							"parentfield":"total_amount",
 							"parenttype":"Expense"})

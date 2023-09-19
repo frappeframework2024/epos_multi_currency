@@ -10,15 +10,18 @@
  "field_order": [
   "naming_series",
   "reference",
+  "branch",
   "column_break_yyec",
   "source_stock_location",
   "target_stock_location",
   "column_break_qqkl",
   "transfer_date",
+  "employee",
   "amended_from",
   "section_break_ebsl",
   "search_items",
-  "items"
+  "items",
+  "employee_name"
  ],
  "fields": [
   {
@@ -97,12 +100,33 @@
    "in_list_view": 1,
    "label": "Transfer Date",
    "reqd": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "Branch"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-15 09:03:12.242383",
+ "modified": "2023-09-19 16:57:05.088121",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Transfer",

@@ -158,6 +158,20 @@ frappe.ui.form.on('Stock In Item', {
 		update_item(doc, frm)
 		frm.refresh_field('items');
 	},
+	is_free(frm, cdt, cdn) {
+		let doc = locals[cdt][cdn];
+		doc.discount_type = "Percent"
+		if (doc.is_free == 1) {
+			doc.discount = 100
+		}
+		else {
+			doc.discount = 0
+		}
+		doc.discount_amount = (doc.sub_total * doc.discount / 100);
+		doc.grand_total = (doc.sub_total || 0) - (doc.discount_amount || 0);
+		update_item(doc, frm)
+		frm.refresh_field('items');
+	},
 	discount_type(frm, cdt, cdn) {
 		let doc = locals[cdt][cdn];
 		doc.discount = 0;

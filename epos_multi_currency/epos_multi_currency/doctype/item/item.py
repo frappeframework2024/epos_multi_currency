@@ -9,35 +9,22 @@ from frappe.utils import fmt_money
 from frappe.utils.formatters import format_value
 
 class Item(Document):
+
 	def after_insert(self):
 		stock_location = frappe.db.get_list('Stock Location')
 		for a in stock_location:
-			if a.name == self.opening_stock_location:
-				b = frappe.get_doc({"doctype":"Stock Location Item", 
-						"stock_location": a.name,
-						"item":self.item_code,
-						"quantity":self.opening_qty,
-						"stock_uom":self.uom,
-						"is_inventory":self.is_inventory_product,
-						"stock_location_enable":1,
-						"item_enable":1,
-						"parent":self.name,
-						"parentfield":"stock_location_item",
-						"parenttype":"item"})
-				b.insert(ignore_permissions = True)
-			else:
-				b = frappe.get_doc({"doctype":"Stock Location Item", 
-						"stock_location": a.name,
-						"item":self.item_code,
-						"quantity":0,
-						"stock_uom":self.uom,
-						"is_inventory":self.is_inventory_product,
-						"stock_location_enable":1,
-						"item_enable":1,
-						"parent":self.name,
-						"parentfield":"stock_location_item",
-						"parenttype":"item"})
-				b.insert(ignore_permissions = True)
+			b = frappe.get_doc({"doctype":"Stock Location Item", 
+					"stock_location": a.name,
+					"item":self.item_code,
+					"quantity":0,
+					"stock_uom":self.uom,
+					"is_inventory":self.is_inventory_product,
+					"stock_location_enable":1,
+					"item_enable":1,
+					"parent":self.name,
+					"parentfield":"stock_location_item",
+					"parenttype":"item"})
+			b.insert(ignore_permissions = True)
 			add_to_inventory_transaction({
 				'doctype': 'Inventory Transaction',
 				'transaction_type':"Item",
@@ -46,7 +33,7 @@ class Item(Document):
 				'item_code': self.name,
 				'unit':self.uom,
 				'stock_location':a.name,
-				'in_quantity':0,
+				'in_quantity': self.opening_qty if a.name == self.opening_stock_location else 0,
 				'uom_conversion':1,
 				'cost':self.cost,
 				'price':self.price,

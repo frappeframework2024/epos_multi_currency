@@ -1,0 +1,19 @@
+{
+ "content": null,
+ "creation": "2023-09-18 10:06:08.746445",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2023-09-18 11:00:16.254960",
+ "modified_by": "Administrator",
+ "module": "ePos Multi Currency",
+ "name": "page-report",
+ "owner": "Administrator",
+ "page_name": "page-report",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 1,
+ "title": "Reports"
+}
