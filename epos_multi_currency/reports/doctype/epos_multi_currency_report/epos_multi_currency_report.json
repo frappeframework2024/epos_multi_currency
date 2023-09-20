@@ -11,6 +11,9 @@
   "report",
   "report_name",
   "parent_doctype",
+  "private",
+  "module",
+  "sort_order",
   "class_name",
   "lft",
   "rgt",
@@ -77,12 +80,32 @@
    "ignore_user_permissions": 1,
    "label": "Parent ePos Multi Currency Report",
    "options": "ePos Multi Currency Report"
+  },
+  {
+   "default": "0",
+   "fieldname": "private",
+   "fieldtype": "Check",
+   "label": "Private"
+  },
+  {
+   "default": "0",
+   "fieldname": "sort_order",
+   "fieldtype": "Int",
+   "label": "Sort Order"
+  },
+  {
+   "fetch_from": "parent_doctype.module",
+   "fieldname": "module",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Module",
+   "options": "Module Def"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2023-09-18 11:53:57.863733",
+ "modified": "2023-09-20 16:25:58.820610",
  "modified_by": "Administrator",
  "module": "Reports",
  "name": "ePos Multi Currency Report",
@@ -103,6 +126,7 @@
    "write": 1
   }
  ],
+ "search_fields": "report_name",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

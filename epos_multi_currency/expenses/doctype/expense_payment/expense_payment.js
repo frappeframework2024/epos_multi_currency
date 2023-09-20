@@ -21,7 +21,7 @@ frappe.ui.form.on("Expense Payment", {
     
     expense: function (frm) {
         frm.clear_table('payments')
-        frappe.call('epos_multi_currency.epos_multi_currency.doctype.expense_payment.expense_payment.get_unpaid_currency', {
+        frappe.call('epos_multi_currency.expenses.doctype.expense_payment.expense_payment.get_unpaid_currency', {
             expense: frm.doc.expense
         }).then(r => {
 

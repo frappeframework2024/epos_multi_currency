@@ -46,6 +46,7 @@
   {
    "fieldname": "document_number",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Document Number"
   },
   {
@@ -72,7 +73,6 @@
   {
    "fieldname": "sale_time",
    "fieldtype": "Time",
-   "in_list_view": 1,
    "label": "Sale Time",
    "reqd": 1
   },
@@ -266,13 +266,15 @@
    "link_fieldname": "sale_invoice"
   }
  ],
- "modified": "2023-09-18 09:06:35.613715",
+ "modified": "2023-09-20 09:54:16.016931",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Sales Invoice",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [],
+ "search_fields": "customer,customer_name",
+ "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

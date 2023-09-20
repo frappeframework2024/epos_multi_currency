@@ -73,11 +73,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "note",
-   "fieldtype": "Small Text",
-   "label": "Note"
-  },
-  {
    "fetch_from": "currency.number_format",
    "fieldname": "format",
    "fieldtype": "Data",
@@ -92,14 +87,19 @@
    "hidden": 1,
    "label": "Symbol",
    "read_only": 1
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-19 11:02:59.784752",
+ "modified": "2023-09-20 17:10:31.750248",
  "modified_by": "Administrator",
- "module": "ePos Multi Currency",
+ "module": "Expenses",
  "name": "Expense Item",
  "naming_rule": "Random",
  "owner": "Administrator",

@@ -27,7 +27,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-09 15:14:36.997444",
+ "modified": "2023-09-20 17:26:39.904791",
  "modified_by": "Administrator",
  "module": "Config",
  "name": "Branch",
@@ -45,6 +45,16 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Sales User",
+   "select": 1
+  },
+  {
+   "read": 1,
+   "role": "Stock User",
+   "select": 1
   }
  ],
  "sort_field": "modified",

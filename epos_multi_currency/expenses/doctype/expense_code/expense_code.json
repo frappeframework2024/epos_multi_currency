@@ -34,6 +34,10 @@
    "options": "Expense Category"
   },
   {
+   "fieldname": "column_break_chuf",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "expense_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -42,10 +46,10 @@
    "reqd": 1
   },
   {
-   "allow_in_quick_entry": 1,
-   "fieldname": "note",
-   "fieldtype": "Small Text",
-   "label": "Note"
+   "fieldname": "default_currency",
+   "fieldtype": "Link",
+   "label": "Default Currency",
+   "options": "Currency"
   },
   {
    "default": "0",
@@ -54,25 +58,21 @@
    "label": "Disabled"
   },
   {
-   "fieldname": "column_break_chuf",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "default_currency",
-   "fieldtype": "Link",
-   "label": "Default Currency",
-   "options": "Currency"
-  },
-  {
    "fieldname": "section_break_shxp",
    "fieldtype": "Section Break"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-14 11:26:34.055897",
+ "modified": "2023-09-20 17:10:43.043691",
  "modified_by": "Administrator",
- "module": "ePos Multi Currency",
+ "module": "Expenses",
  "name": "Expense Code",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",

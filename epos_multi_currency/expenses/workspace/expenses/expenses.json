@@ -1,0 +1,87 @@
+{
+ "charts": [
+  {
+   "chart_name": "Expense Chart",
+   "label": "Daily Expense"
+  }
+ ],
+ "content": "[{\"id\":\"153609KHhV\",\"type\":\"paragraph\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Expense</span>\",\"col\":12}},{\"id\":\"aIPmXBXqGE\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Expense List\",\"col\":12}},{\"id\":\"2xRUYCZ-IG\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Daily Expense\",\"col\":12}},{\"id\":\"Wxa4HB5NJ4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense\",\"col\":3}},{\"id\":\"YAvs7AT3UH\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Expense\",\"col\":3}},{\"id\":\"9ojw-LUP-Y\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Payment\",\"col\":3}},{\"id\":\"wOGGnHFAxu\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Expense Payment\",\"col\":3}},{\"id\":\"984Nv3IMnk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Category\",\"col\":3}},{\"id\":\"ipUW6GCNHd\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Code\",\"col\":3}},{\"id\":\"_66f7tzz6V\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Recent Expense\",\"col\":12}}]",
+ "creation": "2023-09-18 12:56:54.462257",
+ "custom_blocks": [
+  {
+   "custom_block_name": "Recent Expense",
+   "label": "Recent Expense"
+  },
+  {
+   "custom_block_name": "Expense List",
+   "label": "Expense List"
+  }
+ ],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "money-coins-1",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Expenses",
+ "links": [],
+ "modified": "2023-09-20 15:29:10.704730",
+ "modified_by": "Administrator",
+ "module": "Expenses",
+ "name": "Expenses",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 4.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Expense",
+   "link_to": "Expense",
+   "stats_filter": "{\"expense_date\":[\"Timespan\",\"today\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Expense Code",
+   "link_to": "Expense Code",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Expense",
+   "link_to": "Expense",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Expense Category",
+   "link_to": "Expense Category",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Expense Payment",
+   "link_to": "Expense Payment",
+   "stats_filter": "{\"payment_date\":[\"Timespan\",\"today\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "New Expense Payment",
+   "link_to": "Expense Payment",
+   "type": "DocType"
+  }
+ ],
+ "title": "Expenses"
+}

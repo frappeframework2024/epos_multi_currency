@@ -45,7 +45,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-09 15:14:20.004074",
+ "modified": "2023-09-20 17:25:56.231200",
  "modified_by": "Administrator",
  "module": "Config",
  "name": "Stock Location",
@@ -63,6 +63,17 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Stock User",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "read": 1,
+   "role": "Sales User",
+   "select": 1
   }
  ],
  "sort_field": "modified",
