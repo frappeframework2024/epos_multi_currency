@@ -5,7 +5,7 @@
    "label": "Daily Sale"
   }
  ],
- "content": "[{\"id\":\"pEeEDMYBtn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">ePos Retail</span>\",\"col\":12}},{\"id\":\"YDnWyNevD_\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Selling Workspace\",\"col\":12}},{\"id\":\"TqU-U0wZ73\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Daily Sale\",\"col\":9}},{\"id\":\"LiLiaSqHPZ\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Current Receivable\",\"col\":3}},{\"id\":\"KoEt_BWEfw\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":3}},{\"id\":\"6rFwI6y6vn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Payment\",\"col\":3}},{\"id\":\"5VrfSNW48v\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"id\":\"qx-XI1g8Xz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Group\",\"col\":3}},{\"id\":\"aY_i-aAbZd\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"id\":\"9S77PF6uTV\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Category\",\"col\":3}},{\"id\":\"SbWaqccBjg\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"UOM\",\"col\":3}},{\"id\":\"7XW-MhsAV-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Location\",\"col\":3}},{\"id\":\"oWsVG2B5lU\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"CllZjgKXYg\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Recent Sale Invoice</span>\",\"col\":12}},{\"id\":\"XbKp5QQQau\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Recent Sales Invoice\",\"col\":12}}]",
+ "content": "[{\"id\":\"pEeEDMYBtn\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">ePos Retail</span>\",\"col\":12}},{\"id\":\"YDnWyNevD_\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Selling Workspace\",\"col\":12}},{\"id\":\"TqU-U0wZ73\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Daily Sale\",\"col\":9}},{\"id\":\"LiLiaSqHPZ\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Current Receivable\",\"col\":3}},{\"id\":\"KoEt_BWEfw\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":3}},{\"id\":\"6Ocd6BBbzo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Sales Invoice\",\"col\":3}},{\"id\":\"6rFwI6y6vn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sale Payment\",\"col\":3}},{\"id\":\"nfQ0LR7zYW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Sales Payment\",\"col\":3}},{\"id\":\"oWsVG2B5lU\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"CllZjgKXYg\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Recent Sale Invoice</span>\",\"col\":12}},{\"id\":\"XbKp5QQQau\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Recent Sales Invoice\",\"col\":12}}]",
  "creation": "2023-09-05 11:49:50.801642",
  "custom_blocks": [
   {
@@ -30,7 +30,7 @@
  "is_hidden": 0,
  "label": "ePos Retail",
  "links": [],
- "modified": "2023-09-15 16:45:13.757102",
+ "modified": "2023-09-20 11:16:21.273689",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "ePos Retail",
@@ -55,34 +55,6 @@
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Item Group",
-   "link_to": "Item Group",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Customer",
-   "link_to": "Customer",
-   "type": "DocType"
-  },
-  {
-   "color": "Green",
-   "doc_view": "List",
-   "label": "Item",
-   "link_to": "Item",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "New",
-   "label": "New Payment",
-   "link_to": "Sale Payment",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
    "label": "Sales Invoice",
    "link_to": "Sales Invoice",
    "stats_filter": "{\"sale_date\":[\"Timespan\",\"today\"]}",
@@ -90,23 +62,24 @@
   },
   {
    "color": "Grey",
-   "doc_view": "List",
-   "label": "Item Category",
-   "link_to": "Item Category",
+   "doc_view": "New",
+   "label": "New Sales Invoice",
+   "link_to": "Sales Invoice",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Sales Payment",
+   "link_to": "Sale Payment",
    "type": "DocType"
   },
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "UOM",
-   "link_to": "UOM",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Stock Location",
-   "link_to": "Stock Location",
+   "label": "Sale Payment",
+   "link_to": "Sale Payment",
+   "stats_filter": "{\"payment_date\":[\"Timespan\",\"today\"]}",
    "type": "DocType"
   }
  ],
