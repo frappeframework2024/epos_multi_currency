@@ -1,0 +1,13 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Invoice",
+  "enabled": 1,
+  "modified": "2023-09-21 15:35:46.041241",
+  "module": null,
+  "name": "Sales Invoice Print",
+  "script": "frappe.ui.form.on('Sales Invoice', {\n     refresh: function(frm) {\n          frm.add_custom_button(__('Sales Invoice A5'), function(){\n            let url =   \"http://localhost:3344/ReportServer_SQL2016/Pages/ReportViewer.aspx?%2fRetail%2frptReceiptA5&rs:Command=Render&rc:Zoom=Page Width&\" ;\n            url =url + 'name='+ frm.doc.name;\n            let msg = frappe.msgprint(\n                '<iframe src=\"' + url + '\" frameBorder=\"0\" width=\"100%\" height=\"650\" title=\"Print Barcode\"></iframe>',\n                'Print Barcode'\n            );\n            msg.$wrapper.find('.modal-dialog').css(\"max-width\", \"80%\");\n        }, __(\"Print\"));\n        frm.add_custom_button(__('Sales Receipt A5'), function(){\n            let url =   \"http://localhost:3344/ReportServer_SQL2016/Pages/ReportViewer.aspx?%2fRetail%2frptInvoiceA5&rs:Command=Render&rc:Zoom=Page Width&\" ;\n            url =url + 'name='+ frm.doc.name;\n            let msg = frappe.msgprint(\n                '<iframe src=\"' + url + '\" frameBorder=\"0\" width=\"100%\" height=\"650\" title=\"Print Barcode\"></iframe>',\n                'Print Barcode'\n            );\n            msg.$wrapper.find('.modal-dialog').css(\"max-width\", \"80%\");\n        }, __(\"Print\"));\n  },\n})\n\n\n\n",
+  "view": "Form"
+ }
+]

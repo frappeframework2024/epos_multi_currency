@@ -219,6 +219,7 @@ fixtures = [
     {"dt": "Workspace","filters": [["module", "=", "ePos Multi Currency"]]},
     {"dt": "Custom HTML Block"},
     {"dt": "ePos Multi Currency Report"},
+    {"dt": "Client Script"},
     {"dt": "Report","filters": [["module", "=", "Reports"]]},
     {"dt": "Print Format","filters": [["module", "=", "ePos Multi Currency"]]}
 ]
