@@ -25,7 +25,7 @@ frappe.ui.form.on("Stock Payment", {
     
     stock_in: function (frm) {
         frm.clear_table('payments')
-        frappe.call('epos_multi_currency.epos_multi_currency.doctype.stock_payment.stock_payment.get_unpaid_currency', {
+        frappe.call('epos_multi_currency.stock.doctype.stock_payment.stock_payment.get_unpaid_currency', {
             stock_in: frm.doc.stock_in
         }).then(r => {
 
