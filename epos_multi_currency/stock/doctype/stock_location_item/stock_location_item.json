@@ -26,10 +26,26 @@
   },
   {
    "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "cost",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Cost"
+  },
+  {
+   "allow_on_submit": 1,
    "fieldname": "quantity",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Quantity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "stock_uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Stock UOM",
+   "options": "UOM",
    "read_only": 1
   },
   {
@@ -52,30 +68,14 @@
    "fieldtype": "Check",
    "hidden": 1,
    "label": "Item Enable"
-  },
-  {
-   "fieldname": "stock_uom",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Stock UOM",
-   "options": "UOM",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "default": "0",
-   "fieldname": "cost",
-   "fieldtype": "Float",
-   "hidden": 1,
-   "label": "Cost"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-15 15:05:44.515917",
+ "modified": "2023-09-21 18:12:26.962419",
  "modified_by": "Administrator",
- "module": "ePos Multi Currency",
+ "module": "Stock",
  "name": "Stock Location Item",
  "naming_rule": "Random",
  "owner": "Administrator",
