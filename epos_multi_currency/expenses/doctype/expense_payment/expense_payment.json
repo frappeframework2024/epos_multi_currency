@@ -12,13 +12,13 @@
   "naming_series",
   "payment_date",
   "reference",
+  "amended_from",
   "column_break_mvdb",
   "expense",
   "expense_by",
-  "employee_name",
+  "payment_by",
   "section_break_gxpm",
-  "payments",
-  "amended_from"
+  "payments"
  ],
  "fields": [
   {
@@ -56,18 +56,11 @@
    "reqd": 1
   },
   {
-   "fetch_from": "sale_invoice.customer",
+   "fetch_from": "expense.employee_name",
    "fieldname": "expense_by",
    "fieldtype": "Link",
    "label": "Expense By",
    "options": "Employee",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "expense_by.employee_name",
-   "fieldname": "employee_name",
-   "fieldtype": "Data",
-   "label": "Employee Name",
    "read_only": 1
   },
   {
@@ -89,14 +82,20 @@
    "options": "Expense Payment",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "payment_by",
+   "fieldtype": "Link",
+   "label": "Payment By",
+   "options": "Employee"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-20 09:45:53.464500",
+ "modified": "2023-09-21 09:06:36.610270",
  "modified_by": "Administrator",
- "module": "ePos Multi Currency",
+ "module": "Expenses",
  "name": "Expense Payment",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",

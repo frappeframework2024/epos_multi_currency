@@ -93,11 +93,11 @@
   "javascript": null,
   "json": null,
   "letter_head": null,
-  "modified": "2023-09-15 16:55:26.027404",
+  "modified": "2023-09-21 11:00:01.177231",
   "module": "Reports",
   "name": "Sales Invoice",
   "prepared_report": 0,
-  "query": "select\r\nb.sale_date,\r\nsum(if(a.currency = 'USD',a.grand_total,0)) usd,\r\nsum(if(a.currency = 'KHR',a.grand_total,0)) khr,\r\nsum(if(a.currency = 'BAHT',a.grand_total,0)) baht\r\nfrom `tabSales Invoice Item` a\r\ninner join `tabSales Invoice` b on b.name = a.parent\r\ngroup by b.sale_date\r\nlimit 10",
+  "query": "select\r\nb.sale_date,\r\nsum(if(a.currency = 'USD',a.grand_total,0)) usd,\r\nsum(if(a.currency = 'KHR',a.grand_total,0)) khr,\r\nsum(if(a.currency = 'BAHT',a.grand_total,0)) baht\r\nfrom `tabSales Invoice Item` a\r\ninner join `tabSales Invoice` b on b.name = a.parent\r\ngroup by b.sale_date desc\r\nlimit 10",
   "ref_doctype": "Sales Invoice",
   "reference_report": null,
   "report_name": "Sales Invoice",
@@ -109,6 +109,12 @@
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "Sales User"
+   },
+   {
+    "parent": "Sales Invoice",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
    }
   ]
  }

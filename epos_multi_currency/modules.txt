@@ -3,3 +3,4 @@ Stock
 Config
 HR
 Reports
+Expenses

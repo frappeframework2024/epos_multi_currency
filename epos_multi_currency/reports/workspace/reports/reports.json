@@ -5,11 +5,11 @@
    "label": "Daily Sale"
   }
  ],
- "content": "[{\"id\":\"TxPU_CUjNv\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Daily Sale\",\"col\":12}},{\"id\":\"xHaC_49wIq\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Reports</span>\",\"col\":12}},{\"id\":\"0u-NQ17Mvv\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Report\",\"col\":12}}]",
+ "content": "[{\"id\":\"TxPU_CUjNv\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Daily Sale\",\"col\":12}},{\"id\":\"0u-NQ17Mvv\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Report\",\"col\":12}}]",
  "creation": "2023-09-13 14:24:39.623638",
  "custom_blocks": [
   {
-   "custom_block_name": "Report",
+   "custom_block_name": "Sale Report",
    "label": "Report"
   }
  ],
@@ -22,7 +22,7 @@
  "is_hidden": 0,
  "label": "Reports",
  "links": [],
- "modified": "2023-09-18 12:56:57.981861",
+ "modified": "2023-09-21 11:23:34.462940",
  "modified_by": "Administrator",
  "module": "Reports",
  "name": "Reports",
@@ -33,16 +33,10 @@
  "quick_lists": [],
  "roles": [
   {
-   "role": "Sales Manager"
+   "role": "Report Manager"
   },
   {
-   "role": "Sales Master Manager"
-  },
-  {
-   "role": "Stock Manager"
-  },
-  {
-   "role": "Product Manager"
+   "role": "Report User"
   }
  ],
  "sequence_id": 5.0,

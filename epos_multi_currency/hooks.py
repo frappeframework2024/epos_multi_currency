@@ -214,10 +214,11 @@ app_license = "MIT"
 # auth_hooks = [
 #	"epos_multi_currency.auth.validate"
 # ]
-login_page = "templates/custom_login.html"
+login_page = "www/login.html"
 fixtures = [
     {"dt": "Workspace","filters": [["module", "=", "ePos Multi Currency"]]},
     {"dt": "Custom HTML Block"},
+    {"dt": "ePos Multi Currency Report"},
     {"dt": "Report","filters": [["module", "=", "Reports"]]},
     {"dt": "Print Format","filters": [["module", "=", "ePos Multi Currency"]]}
 ]

@@ -1,4 +1,6 @@
+from collections import Counter
 import frappe
+from frappe.config import get_modules_from_all_apps
 import json
 from datetime import datetime
 
@@ -234,24 +236,31 @@ def get_home_workspace_kpi():
 			group by a.name,a.number_format,a.symbol
 		""".format(ytd_date.strftime('%Y-%m-%d'),today.strftime('%Y-%m-%d'))
 	data=dict()
-	mtd_total_order = frappe.db.get_list('Sales Invoice',
+	today_order = frappe.db.get_list('Sales Invoice',
+		 filters= [[
+				'sale_date', '=', today.strftime('%Y-%m-%d')
+			]],
+		fields=['Count(name) as total_order'],
+	)
+	mtd_order = frappe.db.get_list('Sales Invoice',
 		 filters= [[
 				'sale_date', 'between', [mtd_date.strftime('%Y-%m-%d'),today.strftime('%Y-%m-%d')]
 			]],
 		fields=['Count(name) as total_order'],
 	)
-	ytd_total_order = frappe.db.get_list('Sales Invoice',
+	ytd_order = frappe.db.get_list('Sales Invoice',
 		filters= [[
 				'sale_date', 'between', [ytd_date.strftime('%Y-%m-%d'),today.strftime('%Y-%m-%d')]
 			]],
 			fields=['Count(name) as total_order'],
 		)
+	data['today_order'] = today_order[0].total_order
+	data['mtd_order'] = mtd_order[0].total_order
+	data['ytd_order'] = ytd_order[0].total_order
+	
 	data['today_revenue'] = frappe.db.sql(sql_today,as_dict=1)
 	data['mtd_revenue'] = frappe.db.sql(sql_mtd,as_dict=1)
 	data['ytd_revenue'] = frappe.db.sql(sql_ytd,as_dict=1)
-	
-	data['mtd_order'] = mtd_total_order[0].total_order
-	data['ytd_order'] = ytd_total_order[0].total_order
 
 	for d in data['today_revenue']:
 		d.grand_total = frappe.utils.fmt_money(d.grand_total, currency=d.currency,format=d.format)
@@ -260,6 +269,93 @@ def get_home_workspace_kpi():
 	for d in data['ytd_revenue']:
 		d.grand_total = frappe.utils.fmt_money(d.grand_total, currency=d.currency,format=d.format)
 
+
+	return data
+
+
+@frappe.whitelist()
+def get_expense_kpi():
+	today = datetime.today() 
+	mtd_date=today.replace(day=1) #first date of month
+	ytd_date = today.replace(month=1).replace(day=1) #first date of month
+	
+	sql_today="""
+			WITH sale AS(
+			select 
+				a.currency,
+				coalesce(sum(coalesce(a.total_amount,0)),0) as total_amount
+			FROM `tabExpense Total Summary` a
+			inner join `tabExpense` b on b.name = a.parent
+			where 
+				expense_date ='{}' 
+			group by a.currency
+			)
+			select 
+				a.name currency,
+				a.number_format format,
+				a.symbol,
+				coalesce(sum(coalesce(b.total_amount,0)),0) as total_amount
+			FROM `tabCurrency` a
+				left join sale b ON b.currency = a.name
+			where 
+				a.enabled = 1
+			group by a.name,a.number_format,a.symbol
+		""".format(today.strftime('%Y-%m-%d'))
+	sql_mtd="""
+			WITH sale AS(
+			select 
+				a.currency,
+				coalesce(sum(coalesce(a.total_amount,0)),0) as total_amount
+			FROM `tabExpense Total Summary` a
+			inner join `tabExpense` b on b.name = a.parent
+			where 
+				expense_date  between '{}' and '{}' 
+			group by a.currency
+			)
+			select 
+				a.name currency,
+				a.number_format format,
+				a.symbol,
+				coalesce(sum(coalesce(b.total_amount,0)),0) as total_amount
+			FROM `tabCurrency` a
+				left join sale b ON b.currency = a.name
+			where 
+				a.enabled = 1
+			group by a.name,a.number_format,a.symbol
+		""".format(mtd_date.strftime('%Y-%m-%d'),today.strftime('%Y-%m-%d'))
+	sql_ytd="""
+			WITH sale AS(
+			select 
+				a.currency,
+				coalesce(sum(coalesce(a.total_amount,0)),0) as total_amount
+			FROM `tabExpense Total Summary` a
+			inner join `tabExpense` b on b.name = a.parent
+			where 
+				expense_date  between '{}' and '{}' 
+			group by a.currency
+			)
+			select 
+				a.name currency,
+				a.number_format format,
+				a.symbol,
+				coalesce(sum(coalesce(b.total_amount,0)),0) as total_amount
+			FROM `tabCurrency` a
+				left join sale b ON b.currency = a.name
+			where 
+				a.enabled = 1
+			group by a.name,a.number_format,a.symbol
+		""".format(ytd_date.strftime('%Y-%m-%d'),today.strftime('%Y-%m-%d'))
+	data=dict()
+	data['today_expense'] = frappe.db.sql(sql_today,as_dict=1)
+	data['mtd_expense'] = frappe.db.sql(sql_mtd,as_dict=1)
+	data['ytd_expense'] = frappe.db.sql(sql_ytd,as_dict=1)
+
+	for d in data['today_expense']:
+		d.total_amount = frappe.utils.fmt_money(d.total_amount, currency=d.currency,format=d.format)
+	for d in data['mtd_expense']:
+		d.total_amount = frappe.utils.fmt_money(d.total_amount, currency=d.currency,format=d.format)
+	for d in data['ytd_expense']:
+		d.total_amount = frappe.utils.fmt_money(d.total_amount, currency=d.currency,format=d.format)
 
 	return data
 
@@ -296,7 +392,12 @@ def get_sales_invoice_stat(sales_invoice):
 	data = frappe.db.sql(sql,as_dict=1)
 	return data
 
+@frappe.whitelist()
+def get_recent_expense_and_payment():
+	expense_payment = get_recent_expense_payment()
+	expense =  get_recent_expense()
 
+	return {"expense":expense,"expense_payment":expense_payment}
 
 @frappe.whitelist()
 def get_recent_sale_invoice():
@@ -400,6 +501,92 @@ def get_recent_sale():
 					d[key] = frappe.utils.fmt_money(d[key], currency=get_currency(key).name,format=get_currency(key).number_format)
 	return data
 
+def get_recent_expense():
+
+	currencies=[]
+	if frappe.cache().exists('currencies')==0:
+		currencies=frappe.db.get_list('Currency',
+			filters={
+				'enabled': 1
+			},
+			fields=['number_format', 'name']
+		)
+		frappe.cache().set_value('currencies', currencies)
+	else:
+		currencies = frappe.cache().get_value('currencies')	
+  
+	expense_currencies = ', '.join([
+			f"sum(if(currency='{c['name']}',a.total_amount,0)) as {c['name']}"
+			for c in currencies
+	])
+
+	sql="""SELECT
+				a.parent expense,
+				b.expense_date,
+				coalesce(b.company,'No Company') company,
+				{}
+			FROM `tabExpense Total Summary` a
+			INNER JOIN `tabExpense` b ON b.name = a.parent
+			WHERE b.docstatus=1
+			GROUP BY
+				a.parent,
+				b.expense_date,
+				b.company
+			ORDER BY b.creation desc
+			limit 15
+		""".format(expense_currencies)
+	data = frappe.db.sql(sql,as_dict=1)
+	for d in data:
+		d["expense_date"] = frappe.format(d["expense_date"],{"fieldtype":"Date"})
+		for currency in currencies:
+			for key in d:
+				if key == currency.name:
+					d[key] = frappe.utils.fmt_money(d[key], currency=get_currency(key).name,format=get_currency(key).number_format)
+	return data
+
+def get_recent_expense_payment():
+	currencies=[]
+	if frappe.cache().exists('currencies')==0:
+		currencies=frappe.db.get_list('Currency',
+			filters={
+				'enabled': 1
+			},
+			fields=['number_format', 'name']
+		)
+		frappe.cache().set_value('currencies', currencies)
+	else:
+		currencies = frappe.cache().get_value('currencies')	
+  
+	expense_currencies = ', '.join([
+			f"sum(if(currency='{c['name']}',a.total_amount,0)) as {c['name']}"
+			for c in currencies
+	])
+
+	sql="""SELECT
+				b.name document_number,
+				b.expense,
+				b.payment_date,
+				
+				{}
+			FROM `tabExpense Payment Currency` a
+			INNER JOIN `tabExpense Payment` b ON b.name = a.parent
+			WHERE b.docstatus=1
+			GROUP BY
+				b.expense,
+				b.payment_date,
+				b.name
+			ORDER BY b.creation desc
+			limit 15
+		""".format(expense_currencies)
+	data = frappe.db.sql(sql,as_dict=1)
+	for d in data:
+		d["payment_date"] = frappe.format(d["payment_date"],{"fieldtype":"Date"})
+		for currency in currencies:
+			for key in d:
+				if key == currency.name:
+					d[key] = frappe.utils.fmt_money(d[key], currency=get_currency(key).name,format=get_currency(key).number_format)
+	return data
+
 def get_recent_sale_return():
 	currencies=[]
 	if frappe.cache().exists('currencies')==0:
@@ -452,5 +639,191 @@ def get_currency(name):
 @frappe.whitelist()
 def remove_cache(key):
 	result = frappe.cache().delete_value(key)
-	
 	return result
+
+@frappe.whitelist()
+def get_recent_stock():
+	stock_in = get_recent_stock_in()
+	stock_transfer = get_recent_stock_transfer()
+	stock_take = get_recent_stock_take()
+	stock_adjustment = get_recent_stock_adjustment()
+	return {'stock_in':stock_in,'transfer':stock_transfer,"take":stock_take,'adjustment':stock_adjustment}
+
+def get_recent_stock_in():
+	currencies=[]
+	if frappe.cache().exists('currencies')==0:
+		currencies=frappe.db.get_list('Currency',
+			filters={
+				'enabled': 1
+			},
+			fields=['number_format', 'name']
+		)
+		frappe.cache().set_value('currencies', currencies)
+	else:
+		currencies = frappe.cache().get_value('currencies')	
+
+	sale_currencies = ', '.join([
+			f"sum(if(currency='{c['name']}',a.grand_total,0)) as {c['name']}"
+			for c in currencies
+	])
+
+	sql="""select 
+		b.name,
+		b.stock_in_date,
+		b.supplier_name,
+		{}
+		from `tabStock In Payment` a
+		inner join `tabStock In` b on b.name = a.parent
+		group by
+			b.name,
+			b.stock_in_date,
+			b.supplier_name
+		order by 
+			b.creation desc
+		limit 15
+		""".format(sale_currencies)
+	data = frappe.db.sql(sql,as_dict=1)
+	for d in data:
+		d["stock_in_date"] = frappe.format(d["stock_in_date"],{"fieldtype":"Date"})
+		for currency in currencies:
+			for key in d:
+				if key == currency.name:
+					d[key] = frappe.utils.fmt_money(d[key], currency=get_currency(key).name,format=get_currency(key).number_format)
+	return data
+
+def get_recent_stock_transfer():
+	currencies=[]
+	if frappe.cache().exists('currencies')==0:
+		currencies=frappe.db.get_list('Currency',
+			filters={
+				'enabled': 1
+			},
+			fields=['number_format', 'name']
+		)
+		frappe.cache().set_value('currencies', currencies)
+	else:
+		currencies = frappe.cache().get_value('currencies')	
+
+	sale_currencies = ', '.join([
+			f"sum(if(currency='{c['name']}',a.grand_total,0)) as {c['name']}"
+			for c in currencies
+	])
+
+	sql="""select 
+		b.name,
+		b.transfer_date,
+		CONCAT(a.item, '-' ,a.item_name) as item,
+		a.quantity,
+  		a.uom,
+		{}
+		from `tabStock Transfer Item` a
+		inner join `tabStock Transfer` b on b.name = a.parent
+		group by
+			b.name,
+			b.transfer_date,
+			a.item,
+			a.item_name,
+			a.quantity,
+			a.uom
+		order by 
+			b.creation desc
+		limit 15
+		""".format(sale_currencies)
+	data = frappe.db.sql(sql,as_dict=1)
+	for d in data:
+		d["transfer_date"] = frappe.format(d["transfer_date"],{"fieldtype":"Date"})
+		for currency in currencies:
+			for key in d:
+				if key == currency.name:
+					d[key] = frappe.utils.fmt_money(d[key], currency=get_currency(key).name,format=get_currency(key).number_format)
+	return data
+
+def get_recent_stock_take():
+	currencies=[]
+	if frappe.cache().exists('currencies')==0:
+		currencies=frappe.db.get_list('Currency',
+			filters={
+				'enabled': 1
+			},
+			fields=['number_format', 'name']
+		)
+		frappe.cache().set_value('currencies', currencies)
+	else:
+		currencies = frappe.cache().get_value('currencies')	
+
+	sale_currencies = ', '.join([
+			f"sum(if(currency='{c['name']}',a.grand_total,0)) as {c['name']}"
+			for c in currencies
+	])
+
+	sql="""select 
+		b.name,
+		b.stock_take_date,
+		CONCAT(a.item, '-' ,a.item_name) as item,
+		a.quantity,
+  		a.uom,
+		{}
+		from `tabStock Take Item` a
+		inner join `tabStock Take` b on b.name = a.parent
+		group by
+			b.name,
+			b.stock_take_date,
+			a.item,
+			a.item_name,
+			a.quantity,
+			a.uom
+		order by 
+			b.creation desc
+		limit 15
+		""".format(sale_currencies)
+	data = frappe.db.sql(sql,as_dict=1)
+	for d in data:
+		d["stock_take_date"] = frappe.format(d["stock_take_date"],{"fieldtype":"Date"})
+		for currency in currencies:
+			for key in d:
+				if key == currency.name:
+					d[key] = frappe.utils.fmt_money(d[key], currency=get_currency(key).name,format=get_currency(key).number_format)
+	return data
+
+def get_recent_stock_adjustment():
+
+
+	sql="""select 
+		b.name,
+		b.stock_adjustment_date,
+		CONCAT(a.item, '-' ,a.item_name) as item,
+		a.current_quantity as old_quantity,
+		a.new_quantity as new_quantity,
+		a.new_quantity - a.current_quantity as difference,
+  		a.uom
+		from `tabStock Adjustment Item` a
+		inner join `tabStock Adjustment` b on b.name = a.parent
+		group by
+			b.name,
+			b.stock_adjustment_date,
+			a.item,
+			a.item_name,
+			a.current_quantity,
+			a.new_quantity,
+			a.uom
+		order by 
+			b.creation desc
+		limit 15
+		"""
+	data = frappe.db.sql(sql,as_dict=1)
+	for d in data:
+		d["stock_adjustment_date"] = frappe.format(d["stock_adjustment_date"],{"fieldtype":"Date"})
+	return data
+
+@frappe.whitelist()
+def get_allow_module():
+	user =  frappe.session.user
+	all_modules = get_modules_from_all_apps()
+	global_blocked_modules = frappe.get_doc("User", "Administrator").get_blocked_modules()
+	user_blocked_modules = frappe.get_doc("User", user).get_blocked_modules()
+	blocked_modules = global_blocked_modules + user_blocked_modules
+	allowed_modules_list = [m.module_name for m in all_modules if m.get("module_name") not in blocked_modules]
+
+
+
+	return allowed_modules_list

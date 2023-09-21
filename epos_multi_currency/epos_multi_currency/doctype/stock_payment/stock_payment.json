@@ -12,13 +12,16 @@
   "naming_series",
   "payment_date",
   "reference",
+  "amended_from",
   "column_break_mvdb",
   "stock_in",
   "supplier",
   "supplier_name",
+  "payment_by",
   "section_break_gxpm",
   "payments",
-  "amended_from"
+  "section_break_prvn",
+  "note"
  ],
  "fields": [
   {
@@ -95,15 +98,32 @@
    "fetch_from": "stock_in.supplier",
    "fieldname": "supplier",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Supplier",
    "options": "Supplier",
    "read_only": 1
+  },
+  {
+   "fieldname": "payment_by",
+   "fieldtype": "Link",
+   "label": "Payment By",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_prvn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Long Text",
+   "label": "Note"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-13 15:01:38.528249",
+ "modified": "2023-09-21 09:40:32.320765",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Stock Payment",

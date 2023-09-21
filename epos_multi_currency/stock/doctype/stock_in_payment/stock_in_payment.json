@@ -14,7 +14,10 @@
   "grand_total",
   "write_off_amount",
   "paid_amount",
-  "balance"
+  "balance",
+  "column_break_ugia",
+  "format",
+  "symbol"
  ],
  "fields": [
   {
@@ -73,12 +76,32 @@
    "fieldtype": "Float",
    "label": "Grand Total",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ugia",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "currency.number_format",
+   "fieldname": "format",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Format",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "currency.symbol",
+   "fieldname": "symbol",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Symbol",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-09-18 14:43:51.150889",
+ "modified": "2023-09-21 09:53:30.280258",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock In Payment",
