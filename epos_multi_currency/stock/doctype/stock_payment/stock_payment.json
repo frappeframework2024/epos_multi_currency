@@ -125,7 +125,7 @@
  "links": [],
  "modified": "2023-09-21 09:40:32.320765",
  "modified_by": "Administrator",
- "module": "ePos Multi Currency",
+ "module": "Stock",
  "name": "Stock Payment",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
