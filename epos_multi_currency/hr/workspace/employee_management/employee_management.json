@@ -1,0 +1,56 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"x9q6TakS0k\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\">Employee</span>\",\"col\":12}},{\"id\":\"LoGu8unOyz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Position\",\"col\":3}},{\"id\":\"R4UfCdoKVH\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee\",\"col\":3}},{\"id\":\"v5kfVl97hU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Employee\",\"col\":3}}]",
+ "creation": "2023-09-13 14:26:12.550279",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "share-people",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Employee Management",
+ "links": [],
+ "modified": "2023-09-22 09:23:35.656984",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Employee Management",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "HR Manager"
+  }
+ ],
+ "sequence_id": 3.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Employee Position",
+   "link_to": "Employee Position",
+   "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Employee",
+   "link_to": "Employee",
+   "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Employee",
+   "link_to": "Employee",
+   "type": "DocType"
+  }
+ ],
+ "title": "Employee Management"
+}
