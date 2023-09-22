@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:unit_category_name",
  "creation": "2023-09-07 14:45:13.082024",
@@ -36,7 +37,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-09 15:15:11.017659",
+ "modified": "2023-09-22 10:28:33.992300",
  "modified_by": "Administrator",
  "module": "Config",
  "name": "Unit Category",

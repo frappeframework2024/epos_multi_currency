@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:employee_code",
  "creation": "2023-09-13 14:11:06.516120",
@@ -308,7 +309,7 @@
  "image_field": "photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-20 17:27:31.569095",
+ "modified": "2023-09-22 10:26:33.347524",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee",

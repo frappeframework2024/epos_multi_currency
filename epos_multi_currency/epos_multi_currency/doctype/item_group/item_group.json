@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:item_group_name",
  "creation": "2023-09-05 11:06:33.186653",
@@ -29,7 +30,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-05 11:45:49.529804",
+ "modified": "2023-09-22 10:28:56.375465",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Item Group",

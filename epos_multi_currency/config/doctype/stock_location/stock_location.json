@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:stock_location_name",
  "creation": "2023-09-05 11:48:04.574505",
@@ -45,7 +46,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-20 17:25:56.231200",
+ "modified": "2023-09-22 10:26:57.155525",
  "modified_by": "Administrator",
  "module": "Config",
  "name": "Stock Location",

@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:branch_name",
  "creation": "2023-09-05 14:45:44.035909",
@@ -27,7 +28,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-20 17:26:39.904791",
+ "modified": "2023-09-22 10:26:46.310939",
  "modified_by": "Administrator",
  "module": "Config",
  "name": "Branch",

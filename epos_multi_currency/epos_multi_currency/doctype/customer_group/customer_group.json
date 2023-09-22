@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:customer_group_name",
  "creation": "2023-09-05 12:59:21.593432",
@@ -27,7 +28,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-05 13:01:14.713826",
+ "modified": "2023-09-22 10:28:48.038790",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Customer Group",

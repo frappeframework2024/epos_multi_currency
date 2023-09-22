@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "hash",
  "creation": "2023-09-07 14:36:07.777292",
@@ -60,7 +61,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-09 15:15:26.623713",
+ "modified": "2023-09-22 10:28:23.811254",
  "modified_by": "Administrator",
  "module": "Config",
  "name": "Unit of Measurement Conversion",

@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:supplier_code",
  "creation": "2023-09-05 12:10:32.811114",
@@ -67,7 +68,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-18 14:26:59.774856",
+ "modified": "2023-09-22 10:27:44.761185",
  "modified_by": "Administrator",
  "module": "ePos Multi Currency",
  "name": "Supplier",

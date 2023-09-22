@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "naming_series:",
  "creation": "2023-09-14 09:06:18.181141",
@@ -70,7 +71,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-20 17:10:43.043691",
+ "modified": "2023-09-22 10:27:08.193497",
  "modified_by": "Administrator",
  "module": "Expenses",
  "name": "Expense Code",
