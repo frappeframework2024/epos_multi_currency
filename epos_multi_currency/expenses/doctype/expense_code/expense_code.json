@@ -23,7 +23,7 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Expense Code",
-   "options": "EX.####"
+   "options": "EXP.####"
   },
   {
    "allow_in_quick_entry": 1,
@@ -71,7 +71,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-09-22 10:27:08.193497",
+ "modified": "2023-09-22 16:40:33.802510",
  "modified_by": "Administrator",
  "module": "Expenses",
  "name": "Expense Code",
