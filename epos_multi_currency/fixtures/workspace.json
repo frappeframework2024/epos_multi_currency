@@ -137,5 +137,441 @@
    }
   ],
   "title": "ePos Retail"
+ },
+ {
+  "charts": [
+   {
+    "chart_name": "Sales Invoice",
+    "label": "Daily Sale",
+    "parent": "Reports",
+    "parentfield": "charts",
+    "parenttype": "Workspace"
+   }
+  ],
+  "content": "[{\"id\":\"TxPU_CUjNv\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Daily Sale\",\"col\":12}},{\"id\":\"0u-NQ17Mvv\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Report\",\"col\":12}}]",
+  "custom_blocks": [
+   {
+    "custom_block_name": "Sale Report",
+    "label": "Report",
+    "parent": "Reports",
+    "parentfield": "custom_blocks",
+    "parenttype": "Workspace"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Workspace",
+  "for_user": "",
+  "hide_custom": 0,
+  "icon": "chart",
+  "is_hidden": 0,
+  "label": "Reports",
+  "links": [],
+  "modified": "2023-09-21 11:23:34.462940",
+  "module": "Reports",
+  "name": "Reports",
+  "number_cards": [],
+  "parent_page": "",
+  "public": 1,
+  "quick_lists": [],
+  "restrict_to_domain": null,
+  "roles": [
+   {
+    "parent": "Reports",
+    "parentfield": "roles",
+    "parenttype": "Workspace",
+    "role": "Report Manager"
+   },
+   {
+    "parent": "Reports",
+    "parentfield": "roles",
+    "parenttype": "Workspace",
+    "role": "Report User"
+   }
+  ],
+  "sequence_id": 5.0,
+  "shortcuts": [],
+  "title": "Reports"
+ },
+ {
+  "charts": [
+   {
+    "chart_name": "Expense Chart",
+    "label": "Daily Expense",
+    "parent": "Expenses",
+    "parentfield": "charts",
+    "parenttype": "Workspace"
+   }
+  ],
+  "content": "[{\"id\":\"153609KHhV\",\"type\":\"paragraph\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Expense</span>\",\"col\":12}},{\"id\":\"aIPmXBXqGE\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Expense List\",\"col\":12}},{\"id\":\"2xRUYCZ-IG\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Daily Expense\",\"col\":12}},{\"id\":\"Wxa4HB5NJ4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense\",\"col\":3}},{\"id\":\"YAvs7AT3UH\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Expense\",\"col\":3}},{\"id\":\"9ojw-LUP-Y\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Payment\",\"col\":3}},{\"id\":\"wOGGnHFAxu\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Expense Payment\",\"col\":3}},{\"id\":\"984Nv3IMnk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Category\",\"col\":3}},{\"id\":\"ipUW6GCNHd\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Expense Code\",\"col\":3}},{\"id\":\"_66f7tzz6V\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Recent Expense\",\"col\":12}}]",
+  "custom_blocks": [
+   {
+    "custom_block_name": "Recent Expense",
+    "label": "Recent Expense",
+    "parent": "Expenses",
+    "parentfield": "custom_blocks",
+    "parenttype": "Workspace"
+   },
+   {
+    "custom_block_name": "Expense List",
+    "label": "Expense List",
+    "parent": "Expenses",
+    "parentfield": "custom_blocks",
+    "parenttype": "Workspace"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Workspace",
+  "for_user": "",
+  "hide_custom": 0,
+  "icon": "money-coins-1",
+  "is_hidden": 0,
+  "label": "Expenses",
+  "links": [],
+  "modified": "2023-09-20 15:29:10.704730",
+  "module": "Expenses",
+  "name": "Expenses",
+  "number_cards": [],
+  "parent_page": "",
+  "public": 1,
+  "quick_lists": [],
+  "restrict_to_domain": null,
+  "roles": [],
+  "sequence_id": 4.0,
+  "shortcuts": [
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Expense",
+    "link_to": "Expense",
+    "parent": "Expenses",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"expense_date\":[\"Timespan\",\"today\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Expense Code",
+    "link_to": "Expense Code",
+    "parent": "Expenses",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "New",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "New Expense",
+    "link_to": "Expense",
+    "parent": "Expenses",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Expense Category",
+    "link_to": "Expense Category",
+    "parent": "Expenses",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Expense Payment",
+    "link_to": "Expense Payment",
+    "parent": "Expenses",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"payment_date\":[\"Timespan\",\"today\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "New Expense Payment",
+    "link_to": "Expense Payment",
+    "parent": "Expenses",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   }
+  ],
+  "title": "Expenses"
+ },
+ {
+  "charts": [
+   {
+    "chart_name": "Inventory Transaction",
+    "label": "Inventory Transaction",
+    "parent": "Stock",
+    "parentfield": "charts",
+    "parenttype": "Workspace"
+   }
+  ],
+  "content": "[{\"id\":\"Wq7iQpBjBK\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Stock</span>\",\"col\":12}},{\"id\":\"7qHgggJzw6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Location\",\"col\":3}},{\"id\":\"lc3CPVM2Ve\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Group\",\"col\":3}},{\"id\":\"G-l-viaF1l\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Category\",\"col\":3}},{\"id\":\"KF82EOKRDH\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"UOM\",\"col\":3}},{\"id\":\"_hneATnQDp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"id\":\"GbooAAnM9c\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vendor\",\"col\":3}},{\"id\":\"HxFL846_SK\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock In\",\"col\":3}},{\"id\":\"0ztYJ40xVt\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Transfer\",\"col\":3}},{\"id\":\"68F2cqHdXO\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Adjustment\",\"col\":3}},{\"id\":\"Dy0Y4XRkcs\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Take\",\"col\":3}},{\"id\":\"qi5BVYgiFH\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Inventory Transaction\",\"col\":3}},{\"id\":\"dMkDevKvCs\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Inventory Transaction\",\"col\":12}},{\"id\":\"E6pn5uD0YN\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Recent Transaction</span>\",\"col\":12}},{\"id\":\"miAsZyLw99\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Recent Stock Movement\",\"col\":12}}]",
+  "custom_blocks": [
+   {
+    "custom_block_name": "Recent Stock Movement",
+    "label": "Recent Stock Movement",
+    "parent": "Stock",
+    "parentfield": "custom_blocks",
+    "parenttype": "Workspace"
+   }
+  ],
+  "docstatus": 0,
+  "doctype": "Workspace",
+  "for_user": "",
+  "hide_custom": 0,
+  "icon": "list-alt",
+  "is_hidden": 0,
+  "label": "Stock",
+  "links": [],
+  "modified": "2023-09-22 09:19:18.584194",
+  "module": "Stock",
+  "name": "Stock",
+  "number_cards": [],
+  "parent_page": "",
+  "public": 1,
+  "quick_lists": [],
+  "restrict_to_domain": null,
+  "roles": [
+   {
+    "parent": "Stock",
+    "parentfield": "roles",
+    "parenttype": "Workspace",
+    "role": "Product Manager"
+   },
+   {
+    "parent": "Stock",
+    "parentfield": "roles",
+    "parenttype": "Workspace",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Stock",
+    "parentfield": "roles",
+    "parenttype": "Workspace",
+    "role": "Stock User"
+   }
+  ],
+  "sequence_id": 2.0,
+  "shortcuts": [
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Vendor",
+    "link_to": "Supplier",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Item",
+    "link_to": "Item",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"enable\":[\"=\",1]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Stock Adjustment",
+    "link_to": "Stock Adjustment",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"stock_adjustment_date\":[\"Timespan\",\"this month\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Stock Transfer",
+    "link_to": "Stock Transfer",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"transfer_date\":[\"Timespan\",\"this month\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Stock Location",
+    "link_to": "Stock Location",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Stock In",
+    "link_to": "Stock In",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"stock_in_date\":[\"Timespan\",\"this month\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Stock Take",
+    "link_to": "Stock Take",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"stock_take_date\":[\"Timespan\",\"this month\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Inventory Transaction",
+    "link_to": "Inventory Transaction",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"transaction_date\":[\"Timespan\",\"today\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Item Group",
+    "link_to": "Item Group",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Item Category",
+    "link_to": "Item Category",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Grey",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "UOM",
+    "link_to": "UOM",
+    "parent": "Stock",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "restrict_to_domain": null,
+    "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+    "type": "DocType",
+    "url": null
+   }
+  ],
+  "title": "Stock"
  }
 ]
