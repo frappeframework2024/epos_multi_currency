@@ -216,7 +216,7 @@ app_license = "MIT"
 # ]
 login_page = "www/login.html"
 fixtures = [
-    {"dt": "Workspace","filters": [["module", "in", ["ePos Multi Currency","Reports","Expenses","Stock"]]]},
+    {"dt": "Workspace","filters": [["module", "in", ["ePos Multi Currency","Reports","Expenses","Stock","HR"]]]},
     {"dt": "Custom HTML Block"},
     {"dt": "ePos Multi Currency Report"},
     {"dt": "Client Script"},
