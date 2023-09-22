@@ -1,0 +1,137 @@
+{
+ "charts": [
+  {
+   "chart_name": "Inventory Transaction",
+   "label": "Inventory Transaction"
+  }
+ ],
+ "content": "[{\"id\":\"Wq7iQpBjBK\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Stock</span>\",\"col\":12}},{\"id\":\"7qHgggJzw6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Location\",\"col\":3}},{\"id\":\"lc3CPVM2Ve\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Group\",\"col\":3}},{\"id\":\"G-l-viaF1l\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Category\",\"col\":3}},{\"id\":\"KF82EOKRDH\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"UOM\",\"col\":3}},{\"id\":\"_hneATnQDp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"id\":\"GbooAAnM9c\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vendor\",\"col\":3}},{\"id\":\"HxFL846_SK\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock In\",\"col\":3}},{\"id\":\"0ztYJ40xVt\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Transfer\",\"col\":3}},{\"id\":\"68F2cqHdXO\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Adjustment\",\"col\":3}},{\"id\":\"Dy0Y4XRkcs\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Take\",\"col\":3}},{\"id\":\"qi5BVYgiFH\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Inventory Transaction\",\"col\":3}},{\"id\":\"dMkDevKvCs\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Inventory Transaction\",\"col\":12}},{\"id\":\"E6pn5uD0YN\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Recent Transaction</span>\",\"col\":12}},{\"id\":\"miAsZyLw99\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Recent Stock Movement\",\"col\":12}}]",
+ "creation": "2023-09-13 11:36:13.938201",
+ "custom_blocks": [
+  {
+   "custom_block_name": "Recent Stock Movement",
+   "label": "Recent Stock Movement"
+  }
+ ],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "list-alt",
+ "idx": 1,
+ "is_hidden": 0,
+ "label": "Stock",
+ "links": [],
+ "modified": "2023-09-22 09:19:18.584194",
+ "modified_by": "Administrator",
+ "module": "Stock",
+ "name": "Stock",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Product Manager"
+  },
+  {
+   "role": "Stock Manager"
+  },
+  {
+   "role": "Stock User"
+  }
+ ],
+ "sequence_id": 2.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Vendor",
+   "link_to": "Supplier",
+   "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Item",
+   "link_to": "Item",
+   "stats_filter": "{\"enable\":[\"=\",1]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Stock Adjustment",
+   "link_to": "Stock Adjustment",
+   "stats_filter": "{\"stock_adjustment_date\":[\"Timespan\",\"this month\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Stock Transfer",
+   "link_to": "Stock Transfer",
+   "stats_filter": "{\"transfer_date\":[\"Timespan\",\"this month\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Stock Location",
+   "link_to": "Stock Location",
+   "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Stock In",
+   "link_to": "Stock In",
+   "stats_filter": "{\"stock_in_date\":[\"Timespan\",\"this month\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Stock Take",
+   "link_to": "Stock Take",
+   "stats_filter": "{\"stock_take_date\":[\"Timespan\",\"this month\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Inventory Transaction",
+   "link_to": "Inventory Transaction",
+   "stats_filter": "{\"transaction_date\":[\"Timespan\",\"today\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Item Group",
+   "link_to": "Item Group",
+   "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Item Category",
+   "link_to": "Item Category",
+   "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "UOM",
+   "link_to": "UOM",
+   "stats_filter": "{\"name\":[\"not like\",\"%\\\"\\\"%\"]}",
+   "type": "DocType"
+  }
+ ],
+ "title": "Stock"
+}
