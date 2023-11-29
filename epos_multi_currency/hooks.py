@@ -186,7 +186,11 @@ app_license = "MIT"
 
 # User Data Protection
 # --------------------
-
+website_context = {
+    "js": [
+        "/assets/epos_multi_currency/js/custom_report_view.js",
+    ]
+}
 # user_data_fields = [
 #	{
 #		"doctype": "{doctype_1}",
